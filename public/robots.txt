@@ -1,0 +1,11 @@
+# Allow all search engines to crawl and index the entire site
+User-agent: *
+Allow: /
+
+# Disallow access to login/signup pages (optional, for privacy)
+User-agent: *
+Disallow: /login
+Disallow: /signup
+
+# Sitemap (update the URL once you have a custom domain)
+# Sitemap: https://www.yourdomain.com/sitemap-index.xml

@@ -7,6 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://test-website.daksh0909official.workers.dev',
   vite: {
     plugins: [tailwindcss()]
   },

@@ -1,0 +1,170 @@
+---
+// Pinterest Primary Nav - Exactly per DESIGN.md specifications
+---
+<header class="sticky top-0 z-50 bg-[#ffffff] border-b border-[#dadad3] h-16 flex items-center px-4 md:px-6">
+  <div class="max-w-[1440px] w-full mx-auto flex items-center gap-4">
+
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-2 shrink-0 group">
+      <div class="w-8 h-8 rounded-full bg-[#e60023] flex items-center justify-center text-white text-base font-black shadow-sm group-hover:bg-[#cc001f] transition-colors">
+        ⚡
+      </div>
+      <span class="font-bold text-[18px] tracking-tight text-[#e60023] hidden sm:inline">PDFSpark</span>
+    </a>
+
+    <!-- Center Search Bar (Pinterest Signature search-bar component) -->
+    <div class="flex-1 max-w-[580px] mx-2">
+      <div class="relative flex items-center">
+        <svg class="absolute left-4 w-4 h-4 text-[#62625b]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input
+          type="text"
+          id="globalSearch"
+          placeholder="Search formats, convert settings, PDF ideas..."
+          class="w-full h-11 pl-11 pr-4 bg-[#f6f6f3] hover:bg-[#e5e5e0] focus:bg-[#ffffff] text-[#000000] text-sm font-normal rounded-full border border-transparent focus:border-[#dadad3] transition-colors outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Nav Links (Desktop) -->
+    <nav class="hidden lg:flex items-center gap-1">
+      <a href="#converter" class="text-sm font-semibold text-[#000000] px-3.5 py-2 rounded-full hover:bg-[#f6f6f3] transition-colors">Converter</a>
+      <a href="#masonry" class="text-sm font-semibold text-[#000000] px-3.5 py-2 rounded-full hover:bg-[#f6f6f3] transition-colors">Pin Gallery</a>
+      <a href="#formats" class="text-sm font-semibold text-[#000000] px-3.5 py-2 rounded-full hover:bg-[#f6f6f3] transition-colors">Formats</a>
+      <a href="#faq" class="text-sm font-semibold text-[#000000] px-3.5 py-2 rounded-full hover:bg-[#f6f6f3] transition-colors">FAQ</a>
+    </nav>
+
+    <!-- Actions: Guest vs User -->
+    <div class="ml-auto flex items-center gap-2.5">
+      <!-- Guest state -->
+      <div id="headerGuestNav" class="flex items-center gap-2">
+        <button
+          type="button"
+          id="headerLoginBtn"
+          class="h-10 px-4 rounded-2xl bg-[#e5e5e0] hover:bg-[#c8c8c1] text-[#000000] text-sm font-bold transition-colors cursor-pointer"
+        >
+          Log in
+        </button>
+        <button
+          type="button"
+          id="headerSignupBtn"
+          class="h-10 px-4 rounded-2xl bg-[#e60023] hover:bg-[#cc001f] text-white text-sm font-bold transition-colors shadow-sm cursor-pointer"
+        >
+          Sign up
+        </button>
+      </div>
+
+      <!-- Logged In state -->
+      <div id="headerUserNav" class="hidden items-center gap-2 relative">
+        <button
+          type="button"
+          id="headerUserMenuBtn"
+          class="h-10 pl-2 pr-3 bg-[#f6f6f3] hover:bg-[#e5e5e0] rounded-full flex items-center gap-2 transition-colors cursor-pointer border border-[#dadad3]"
+        >
+          <div id="headerUserAvatar" class="w-7 h-7 rounded-full bg-[#e60023] text-white text-xs font-bold flex items-center justify-center">
+            U
+          </div>
+          <span id="headerUserName" class="text-xs font-semibold text-[#000000] max-w-[90px] truncate">
+            Daksh
+          </span>
+          <svg class="w-3.5 h-3.5 text-[#62625b]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="headerUserDropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-2xl border border-[#dadad3] shadow-[0_16px_32px_rgba(0,0,0,0.12)] p-2 z-50">
+          <div class="px-3 py-2 border-b border-[#e5e5e0] mb-1">
+            <p class="text-xs font-bold text-[#000000] truncate" id="headerUserEmail">user@example.com</p>
+            <p class="text-[10px] text-[#103c25] bg-[#c7f0da] px-2 py-0.5 rounded-full inline-block font-bold mt-1">
+              ✓ Pro / 1 GB Uploads
+            </p>
+          </div>
+          <a href="#converter" class="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#33332e] hover:bg-[#f6f6f3] rounded-xl transition-colors">
+            <span>⚡</span> Convert PDF
+          </a>
+          <button
+            type="button"
+            id="headerLogoutBtn"
+            class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-[#e60023] hover:bg-[#f6f6f3] rounded-xl transition-colors text-left cursor-pointer"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  // Auth Controls
+  const loginBtn = document.getElementById('headerLoginBtn');
+  const signupBtn = document.getElementById('headerSignupBtn');
+  const guestNav = document.getElementById('headerGuestNav')!;
+  const userNav = document.getElementById('headerUserNav')!;
+  const userMenuBtn = document.getElementById('headerUserMenuBtn');
+  const userDropdown = document.getElementById('headerUserDropdown');
+  const userName = document.getElementById('headerUserName')!;
+  const userAvatar = document.getElementById('headerUserAvatar')!;
+  const userEmail = document.getElementById('headerUserEmail')!;
+  const logoutBtn = document.getElementById('headerLogoutBtn');
+
+  loginBtn?.addEventListener('click', () => {
+    if ((window as any).openAuthModal) {
+      (window as any).openAuthModal(false);
+    }
+  });
+
+  signupBtn?.addEventListener('click', () => {
+    if ((window as any).openAuthModal) {
+      (window as any).openAuthModal(true);
+    }
+  });
+
+  function checkAuth() {
+    const raw = localStorage.getItem('pdfspark_user');
+    if (raw) {
+      try {
+        const u = JSON.parse(raw);
+        guestNav.classList.add('hidden');
+        userNav.classList.remove('hidden');
+        userNav.classList.add('flex');
+        userName.textContent = u.name || 'Account';
+        userAvatar.textContent = (u.avatar || u.name?.charAt(0) || 'U').toUpperCase();
+        userEmail.textContent = u.email || 'user@example.com';
+      } catch (e) {
+        showGuest();
+      }
+    } else {
+      showGuest();
+    }
+  }
+
+  function showGuest() {
+    guestNav.classList.remove('hidden');
+    userNav.classList.add('hidden');
+    userNav.classList.remove('flex');
+    if (userDropdown) userDropdown.classList.add('hidden');
+  }
+
+  userMenuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown?.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', () => {
+    userDropdown?.classList.add('hidden');
+  });
+
+  logoutBtn?.addEventListener('click', () => {
+    localStorage.removeItem('pdfspark_user');
+    showGuest();
+    window.dispatchEvent(new Event('authChange'));
+  });
+
+  window.addEventListener('authChange', checkAuth);
+  checkAuth();
+</script>

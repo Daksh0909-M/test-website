@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@source "../**/*.{astro,html,js,jsx,ts,tsx}";
+
+:root {
+  /* Colors from DESIGN.md */
+  --color-primary: #e60023;
+  --color-primary-pressed: #cc001f;
+  --color-on-primary: #ffffff;
+  --color-ink: #000000;
+  --color-ink-soft: #211922;
+  --color-body: #33332e;
+  --color-charcoal: #262622;
+  --color-mute: #62625b;
+  --color-ash: #91918c;
+  --color-stone: #c8c8c1;
+  --color-hairline: #dadad3;
+  --color-hairline-soft: #e5e5e0;
+  --color-on-secondary: #000000;
+  --color-secondary-bg: #e5e5e0;
+  --color-secondary-pressed: #c8c8c1;
+  --color-canvas: #ffffff;
+  --color-surface-soft: #fbfbf9;
+  --color-surface-card: #f6f6f3;
+  --color-surface-dark: #262622;
+  --color-focus-outer: #435ee5;
+  --color-focus-inner: #ffffff;
+  --color-success-deep: #103c25;
+  --color-success-pale: #c7f0da;
+  --color-error: #9e0a0a;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Radius from DESIGN.md: strictly 16px (md), 32px (lg), 9999px (full) */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-xxs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-section: 64px;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-surface-soft);
+  color: var(--color-body);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+/* Primary Button (Pinterest Red) */
+.btn-pinterest-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.btn-pinterest-primary:hover,
+.btn-pinterest-primary:active {
+  background-color: var(--color-primary-pressed);
+}
+
+/* Secondary Button (Warm Gray Cream) */
+.btn-pinterest-secondary {
+  background-color: var(--color-secondary-bg);
+  color: var(--color-on-secondary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.btn-pinterest-secondary:hover,
+.btn-pinterest-secondary:active {
+  background-color: var(--color-secondary-pressed);
+}
+
+/* Circular Icon Button */
+.btn-pinterest-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-card);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.btn-pinterest-icon:hover {
+  background-color: var(--color-secondary-bg);
+}
+
+/* Overlay Pill on Image */
+.pin-overlay-pill {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* Focus Ring */
+input:focus, button:focus-visible {
+  outline: 2px solid var(--color-focus-outer) !important;
+  outline-offset: 2px;
+}

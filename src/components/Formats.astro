@@ -1,0 +1,89 @@
+---
+// Pinterest Format Showcase per DESIGN.md
+---
+
+<section id="formats" class="py-16 md:py-24 px-4 md:px-6 bg-[#ffffff] border-b border-[#dadad3]">
+  <div class="max-w-[1280px] mx-auto">
+
+    <div class="text-center max-w-[620px] mx-auto mb-16">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f6f3] text-xs font-bold text-[#62625b] mb-3 border border-[#dadad3]">
+        📂 Supported File Types
+      </div>
+      <h2 class="text-[28px] sm:text-[38px] font-bold text-[#000000] tracking-[-1.2px] leading-tight mb-3">
+        Tailored export for every use case
+      </h2>
+      <p class="text-base text-[#62625b]">
+        Each format is rendered pixel-perfect from vector PDF data. Choose what matches your workflow.
+      </p>
+    </div>
+
+    <!-- 5 Format Cards (Pinterest Category Tile style: 16px radius, surface-card, no shadow) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      {[
+        {
+          ext: "JPG",
+          full: "JPEG Standard",
+          pill: "Most Popular",
+          pillBg: "bg-[#e60023] text-white",
+          desc: "Small file sizes with adjustable lossy compression. Best for sharing, email attachments, and web galleries.",
+          bullets: ["Adjustable 10–100% quality", "White background auto-fill", "Fastest batch download"]
+        },
+        {
+          ext: "PNG",
+          full: "Portable Network",
+          pill: "Lossless Alpha",
+          pillBg: "bg-[#000000] text-white",
+          desc: "True lossless compression preserving sharp document lines, diagrams, and transparent layers.",
+          bullets: ["100% vector line sharpness", "Transparent layer support", "Ideal for diagrams & text"]
+        },
+        {
+          ext: "WebP",
+          full: "Google Web Picture",
+          pill: "30% Smaller",
+          pillBg: "bg-[#e5e5e0] text-[#000000]",
+          desc: "Next-gen web format offering superior quality at substantially smaller file footprints.",
+          bullets: ["Google Chrome & web optimized", "Fast page loading", "Rich color reproduction"]
+        },
+        {
+          ext: "TIFF",
+          full: "Tagged Image",
+          pill: "Print Master",
+          pillBg: "bg-[#e5e5e0] text-[#000000]",
+          desc: "Uncompressed binary baseline TIFF. The industry standard for offset printing, scans, and archives.",
+          bullets: ["Direct 300 DPI resolution", "Uncompressed RGB strip data", "Publishing & prepress ready"]
+        },
+        {
+          ext: "BMP",
+          full: "Windows Bitmap",
+          pill: "Raw Pixel",
+          pillBg: "bg-[#e5e5e0] text-[#000000]",
+          desc: "Uncompressed 24-bit raw pixel bitmap. Flawless compatibility with legacy desktop and CAD software.",
+          bullets: ["Pure uncompressed raster", "Legacy CAD & tools ready", "Exact 1:1 color mapping"]
+        }
+      ].map((fmt) => (
+        <div class="bg-[#f6f6f3] border border-[#dadad3] rounded-[16px] p-6 flex flex-col justify-between hover:bg-[#ffffff] hover:border-[#000000] transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-2xl font-black text-[#000000] tracking-tight">{fmt.ext}</span>
+              <span class={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${fmt.pillBg}`}>
+                {fmt.pill}
+              </span>
+            </div>
+            <p class="text-xs font-bold text-[#62625b] uppercase tracking-wider mb-2">{fmt.full}</p>
+            <p class="text-xs text-[#33332e] leading-relaxed mb-6">{fmt.desc}</p>
+          </div>
+
+          <div class="space-y-1.5 pt-4 border-t border-[#dadad3]">
+            {fmt.bullets.map((b) => (
+              <div class="flex items-center gap-1.5 text-[11px] text-[#62625b]">
+                <span class="text-[#e60023] font-bold">✓</span>
+                <span>{b}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

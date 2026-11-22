@@ -1,0 +1,276 @@
+---
+// Pinterest Modal Card - Exactly per DESIGN.md lines 500-504 (32px radius, 50% scrim, 16px ambient shadow)
+---
+<div id="authModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-[#000000]/50 backdrop-blur-[2px] transition-all duration-200">
+  <!-- Modal Card: 32px radius per DESIGN.md {rounded.lg} -->
+  <div class="relative w-full max-w-[460px] bg-[#ffffff] rounded-[32px] shadow-[0_16px_36px_rgba(0,0,0,0.22)] p-8 md:p-10 border border-[#dadad3] overflow-hidden">
+
+    <!-- Close button (circular icon button per DESIGN.md {component.button-icon-circular}) -->
+    <button
+      id="closeAuthModal"
+      class="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#f6f6f3] hover:bg-[#e5e5e0] flex items-center justify-center text-[#000000] transition-colors cursor-pointer"
+      aria-label="Close"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Brand icon in modal -->
+    <div class="flex flex-col items-center text-center mb-6">
+      <div class="w-12 h-12 rounded-full bg-[#e60023] flex items-center justify-center text-white text-xl font-black mb-3 shadow-sm">
+        ⚡
+      </div>
+      <h2 id="authModalTitle" class="text-[24px] font-bold text-[#000000] tracking-[-0.8px] leading-tight mb-1">
+        Welcome to PDFSpark
+      </h2>
+      <p id="authModalSub" class="text-sm text-[#62625b]">
+        Convert larger files up to 1 GB and manage your exports
+      </p>
+    </div>
+
+    <!-- Reason Banner (e.g. for >100MB files) -->
+    <div id="authReasonBanner" class="hidden mb-5 p-3.5 bg-[#fef3c7] border border-[#fcd34d] rounded-[16px] text-xs text-[#78350f] items-start gap-2.5">
+      <span class="text-base leading-none">📦</span>
+      <div>
+        <p id="authReasonTitle" class="font-bold text-[#92400e]">Large File Limit (100 MB)</p>
+        <p id="authReasonText" class="text-[11px] text-[#78350f] mt-0.5 leading-relaxed">
+          Create a free account to unlock conversions up to 1 GB with priority speed!
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabs: Sign In / Create Account (Filter chip style) -->
+    <div class="flex rounded-full bg-[#f6f6f3] p-1 mb-5 border border-[#dadad3]">
+      <button
+        id="tabLogin"
+        class="flex-1 py-2 text-xs font-bold rounded-full transition-all cursor-pointer bg-[#000000] text-white shadow-xs"
+      >
+        Sign in
+      </button>
+      <button
+        id="tabSignup"
+        class="flex-1 py-2 text-xs font-bold rounded-full transition-all cursor-pointer text-[#62625b] hover:text-[#000000]"
+      >
+        Sign up
+      </button>
+    </div>
+
+    <!-- OAuth One-Click Buttons (Secondary button style: #e5e5e0, 16px radius) -->
+    <div class="space-y-2 mb-5">
+      <button
+        type="button"
+        class="oauth-btn w-full h-11 flex items-center justify-center gap-2.5 px-4 bg-[#e5e5e0] hover:bg-[#c8c8c1] rounded-[16px] text-xs font-bold text-[#000000] transition-colors cursor-pointer"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        Continue with Google
+      </button>
+      <button
+        type="button"
+        class="oauth-btn w-full h-11 flex items-center justify-center gap-2.5 px-4 bg-[#e5e5e0] hover:bg-[#c8c8c1] rounded-[16px] text-xs font-bold text-[#000000] transition-colors cursor-pointer"
+      >
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Continue with GitHub
+      </button>
+    </div>
+
+    <!-- Divider -->
+    <div class="relative flex items-center justify-center mb-5">
+      <div class="border-t border-[#dadad3] w-full"></div>
+      <span class="bg-[#ffffff] px-3 text-[11px] font-bold text-[#91918c] uppercase tracking-wider absolute">OR</span>
+    </div>
+
+    <!-- Form: inputs with 16px radius per DESIGN.md {component.text-input} -->
+    <form id="authForm" class="space-y-3.5">
+      <div id="nameFieldGroup" class="hidden">
+        <label class="block text-xs font-bold text-[#000000] mb-1" for="authName">Full Name</label>
+        <input
+          type="text"
+          id="authName"
+          placeholder="Your name"
+          class="w-full h-11 px-4 rounded-[16px] border border-[#dadad3] text-sm text-[#000000] placeholder:text-[#91918c] bg-[#ffffff] focus:border-[#000000] focus:ring-2 focus:ring-[#435ee5] transition-all outline-none"
+        />
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[#000000] mb-1" for="authEmail">Email address</label>
+        <input
+          type="email"
+          id="authEmail"
+          required
+          placeholder="name@example.com"
+          class="w-full h-11 px-4 rounded-[16px] border border-[#dadad3] text-sm text-[#000000] placeholder:text-[#91918c] bg-[#ffffff] focus:border-[#000000] focus:ring-2 focus:ring-[#435ee5] transition-all outline-none"
+        />
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[#000000] mb-1" for="authPassword">Password</label>
+        <input
+          type="password"
+          id="authPassword"
+          required
+          placeholder="••••••••"
+          class="w-full h-11 px-4 rounded-[16px] border border-[#dadad3] text-sm text-[#000000] placeholder:text-[#91918c] bg-[#ffffff] focus:border-[#000000] focus:ring-2 focus:ring-[#435ee5] transition-all outline-none"
+        />
+      </div>
+
+      <div id="authAlert" class="hidden p-3 rounded-[16px] text-xs font-semibold"></div>
+
+      <!-- Pinterest Red Button Primary -->
+      <button
+        type="submit"
+        id="authSubmitBtn"
+        class="w-full h-11 mt-2 rounded-[16px] bg-[#e60023] hover:bg-[#cc001f] text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+      >
+        <span>Sign in</span>
+      </button>
+    </form>
+
+    <!-- Footer Toggle -->
+    <div class="mt-6 text-center text-xs text-[#62625b]">
+      <span id="toggleAuthText">Don't have an account?</span>
+      <button id="toggleAuthMode" class="text-[#e60023] font-bold hover:underline ml-1 cursor-pointer">
+        Sign up for free
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let isSignUpMode = false;
+
+  const authModal = document.getElementById('authModal')!;
+  const closeBtn = document.getElementById('closeAuthModal')!;
+  const tabLogin = document.getElementById('tabLogin')!;
+  const tabSignup = document.getElementById('tabSignup')!;
+  const nameFieldGroup = document.getElementById('nameFieldGroup')!;
+  const authSubmitBtn = document.getElementById('authSubmitBtn')!;
+  const toggleAuthText = document.getElementById('toggleAuthText')!;
+  const toggleAuthMode = document.getElementById('toggleAuthMode')!;
+  const authForm = document.getElementById('authForm') as HTMLFormElement;
+  const authEmail = document.getElementById('authEmail') as HTMLInputElement;
+  const authName = document.getElementById('authName') as HTMLInputElement;
+  const authAlert = document.getElementById('authAlert')!;
+  const authModalTitle = document.getElementById('authModalTitle')!;
+  const authModalSub = document.getElementById('authModalSub')!;
+
+  function setMode(signUp: boolean) {
+    isSignUpMode = signUp;
+    if (isSignUpMode) {
+      tabSignup.className = 'flex-1 py-2 text-xs font-bold rounded-full transition-all cursor-pointer bg-[#000000] text-white shadow-xs';
+      tabLogin.className = 'flex-1 py-2 text-xs font-bold rounded-full transition-all cursor-pointer text-[#62625b] hover:text-[#000000]';
+      nameFieldGroup.classList.remove('hidden');
+      authModalTitle.textContent = 'Join PDFSpark';
+      authModalSub.textContent = 'Unlock files up to 1 GB with priority speed';
+      authSubmitBtn.querySelector('span')!.textContent = 'Create free account';
+      toggleAuthText.textContent = 'Already have an account?';
+      toggleAuthMode.textContent = 'Log in';
+    } else {
+      tabLogin.className = 'flex-1 py-2 text-xs font-bold rounded-full transition-all cursor-pointer bg-[#000000] text-white shadow-xs';
+      tabSignup.className = 'flex-1 py-2 text-xs font-bold rounded-full transition-all cursor-pointer text-[#62625b] hover:text-[#000000]';
+      nameFieldGroup.classList.add('hidden');
+      authModalTitle.textContent = 'Welcome to PDFSpark';
+      authModalSub.textContent = 'Convert larger files up to 1 GB and manage your exports';
+      authSubmitBtn.querySelector('span')!.textContent = 'Sign in';
+      toggleAuthText.textContent = "Don't have an account?";
+      toggleAuthMode.textContent = 'Sign up for free';
+    }
+  }
+
+  export function openModal(signUp = false, reason?: { title: string; text: string }) {
+    setMode(signUp);
+    const reasonBanner = document.getElementById('authReasonBanner');
+    const reasonTitle = document.getElementById('authReasonTitle');
+    const reasonText = document.getElementById('authReasonText');
+
+    if (reason && reasonBanner && reasonTitle && reasonText) {
+      reasonTitle.textContent = reason.title;
+      reasonText.textContent = reason.text;
+      reasonBanner.classList.remove('hidden');
+      reasonBanner.classList.add('flex');
+    } else if (reasonBanner) {
+      reasonBanner.classList.add('hidden');
+      reasonBanner.classList.remove('flex');
+    }
+
+    authAlert.classList.add('hidden');
+    authModal.classList.remove('hidden');
+    authModal.classList.add('flex');
+    authEmail.focus();
+  }
+
+  export function closeModal() {
+    authModal.classList.add('hidden');
+    authModal.classList.remove('flex');
+  }
+
+  closeBtn?.addEventListener('click', closeModal);
+  authModal?.addEventListener('click', (e) => {
+    if (e.target === authModal) closeModal();
+  });
+
+  tabLogin?.addEventListener('click', () => setMode(false));
+  tabSignup?.addEventListener('click', () => setMode(true));
+  toggleAuthMode?.addEventListener('click', () => setMode(!isSignUpMode));
+
+  (window as any).openAuthModal = openModal;
+  (window as any).closeAuthModal = closeModal;
+
+  document.querySelectorAll('.oauth-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const provider = btn.textContent?.includes('Google') ? 'Google' : 'GitHub';
+      const mockUser = {
+        name: `${provider} User`,
+        email: `user@${provider.toLowerCase()}.com`,
+        avatar: provider === 'Google' ? 'G' : 'GH'
+      };
+      localStorage.setItem('pdfspark_user', JSON.stringify(mockUser));
+      showAlert(`Signed in with ${provider} successfully!`, true);
+      setTimeout(() => {
+        closeModal();
+        window.dispatchEvent(new Event('authChange'));
+      }, 600);
+    });
+  });
+
+  function showAlert(msg: string, isSuccess: boolean) {
+    authAlert.className = isSuccess
+      ? 'p-3 rounded-[16px] text-xs font-bold bg-[#c7f0da] text-[#103c25]'
+      : 'p-3 rounded-[16px] text-xs font-bold bg-[#fef2f2] text-[#9e0a0a]';
+    authAlert.textContent = msg;
+    authAlert.classList.remove('hidden');
+  }
+
+  authForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = authEmail.value.trim();
+    const name = authName.value.trim() || email.split('@')[0];
+
+    if (!email) {
+      showAlert('Please enter an email address.', false);
+      return;
+    }
+
+    const user = {
+      name: isSignUpMode ? name : email.split('@')[0],
+      email: email,
+      avatar: (isSignUpMode ? name : email).charAt(0).toUpperCase()
+    };
+
+    localStorage.setItem('pdfspark_user', JSON.stringify(user));
+    showAlert(isSignUpMode ? 'Welcome to PDFSpark!' : 'Signed in successfully!', true);
+
+    setTimeout(() => {
+      closeModal();
+      window.dispatchEvent(new Event('authChange'));
+    }, 600);
+  });
+</script>

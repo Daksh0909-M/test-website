@@ -1,0 +1,1383 @@
+---
+// Pinterest Hero & Dual Converter (PDF to Images & iLovePDF-Style Images to PDF) per DESIGN.md
+---
+
+<section id="converter" class="py-12 md:py-20 px-4 md:px-6 bg-[#fbfbf9] border-b border-[#dadad3]">
+  <div class="max-w-[1280px] mx-auto flex flex-col items-center">
+
+    <!-- Mode Switcher Tabs (Pinterest Filter Chips style) -->
+    <div class="inline-flex items-center gap-1.5 p-1.5 bg-[#ffffff] border border-[#dadad3] rounded-full mb-6 shadow-sm">
+      <button
+        type="button"
+        id="modeBtnPdfToImg"
+        class="h-10 px-5 rounded-full text-xs font-bold transition-all cursor-pointer bg-[#000000] text-white shadow-xs flex items-center gap-2"
+      >
+        <span>📄</span>
+        <span>PDF to Images</span>
+      </button>
+      <button
+        type="button"
+        id="modeBtnImgToPdf"
+        class="h-10 px-5 rounded-full text-xs font-bold transition-all cursor-pointer bg-transparent text-[#62625b] hover:text-[#000000] hover:bg-[#f6f6f3] flex items-center gap-2"
+      >
+        <span>🖼️</span>
+        <span>Images to PDF</span>
+      </button>
+    </div>
+
+    <!-- Dynamic Display Headline (70px Display-XL per DESIGN.md) -->
+    <h1 id="heroHeadline" class="text-center font-semibold text-[#000000] leading-[1.08] tracking-[-1.2px] mb-4 text-[36px] sm:text-[52px] md:text-[68px] max-w-[860px]">
+      Convert PDF ideas to <span class="text-[#e60023]">every image format</span>
+    </h1>
+
+    <!-- Subtitle (Body-MD per DESIGN.md) -->
+    <p id="heroSubtext" class="text-center text-[#62625b] text-base md:text-[18px] max-w-[580px] leading-relaxed mb-10">
+      Transform PDF pages into high-resolution JPG, PNG, WebP, TIFF, and BMP images in seconds. Free, private, and browser-powered.
+    </p>
+
+    <!-- ════════ Main Converter Card ════════ -->
+    <div id="mainConverterCard" class="w-full max-w-[640px] bg-[#ffffff] rounded-[16px] border border-[#e5e5e0] shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 md:p-8 transition-all duration-300">
+
+      <!-- ══════════════════════════════════════════
+           PANEL 1: PDF to Images Tool
+      ══════════════════════════════════════════ -->
+      <div id="panelPdfToImg" class="block">
+        <div class="flex items-center justify-between pb-5 border-b border-[#e5e5e0] mb-6">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-[#e60023] flex items-center justify-center text-white text-xs font-bold">⚡</span>
+            <span class="text-sm font-bold text-[#000000]">PDF to Image Pin Converter</span>
+          </div>
+          <span class="text-xs font-semibold text-[#62625b] bg-[#f6f6f3] px-3 py-1 rounded-full border border-[#dadad3]">
+            Instant Render
+          </span>
+        </div>
+
+        <!-- Drop Zone -->
+        <div
+          id="dz"
+          class="relative bg-[#f6f6f3] hover:bg-[#e5e5e0] border-2 border-dashed border-[#c8c8c1] hover:border-[#e60023] rounded-[16px] p-8 md:p-10 text-center cursor-pointer transition-all duration-200"
+        >
+          <input
+            type="file"
+            id="fi"
+            accept=".pdf,application/pdf"
+            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          />
+          <div class="w-12 h-12 rounded-full bg-[#ffffff] flex items-center justify-center text-[#e60023] mx-auto mb-3 shadow-sm border border-[#dadad3]">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+          </div>
+          <p id="dzLabel" class="text-sm font-bold text-[#000000] mb-1">
+            Drop your PDF here, or <span class="text-[#e60023] underline underline-offset-2">browse files</span>
+          </p>
+          <p id="dzLimitText" class="text-xs text-[#62625b]">
+            Up to 100 MB for guests · Sign up for up to 1 GB
+          </p>
+        </div>
+
+        <!-- Format Selection -->
+        <div class="mt-6 pt-6 border-t border-[#e5e5e0]">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-[#62625b] uppercase tracking-wider">Select Output Format</span>
+            <span class="text-[11px] text-[#91918c]">Lossless extraction</span>
+          </div>
+
+          <div id="fmtTabs" class="flex flex-wrap gap-2 mb-6">
+            {[
+              { f: "jpg", label: "JPG", desc: "Most Popular" },
+              { f: "png", label: "PNG", desc: "Lossless" },
+              { f: "webp", label: "WebP", desc: "Modern Web" },
+              { f: "tiff", label: "TIFF", desc: "Print Pro" },
+              { f: "bmp", label: "BMP", desc: "Raw Bit" },
+            ].map(({ f, label, desc }, i) => (
+              <button
+                type="button"
+                data-fmt={f}
+                class={`filter-chip-btn relative px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                  i === 0
+                    ? "bg-[#000000] text-white border-[#000000]"
+                    : "bg-[#f6f6f3] text-[#000000] border-transparent hover:bg-[#e5e5e0]"
+                }`}
+              >
+                <span>{label}</span>
+                <span class="text-[10px] opacity-75">· {desc}</span>
+              </button>
+            ))}
+          </div>
+
+          <!-- Settings -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-[#f6f6f3] rounded-[16px] border border-[#e5e5e0] mb-6">
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <label class="text-xs font-bold text-[#000000]" for="qSlider">Image Quality</label>
+                <span id="qVal" class="text-xs font-bold text-[#e60023]">90%</span>
+              </div>
+              <input
+                type="range"
+                id="qSlider"
+                min="10"
+                max="100"
+                value="90"
+                class="w-full h-1.5 bg-[#e5e5e0] rounded-lg appearance-none cursor-pointer accent-[#e60023]"
+              />
+            </div>
+            <div>
+              <span class="text-xs font-bold text-[#000000] block mb-1.5">Resolution</span>
+              <div id="dpiTabs" class="flex gap-1.5">
+                {["150", "200", "300"].map((dpi, i) => (
+                  <button
+                    type="button"
+                    data-dpi={dpi}
+                    class={`flex-1 py-1.5 text-xs font-bold rounded-full border transition-all cursor-pointer ${
+                      i === 0
+                        ? "bg-[#000000] text-white border-[#000000]"
+                        : "bg-[#ffffff] text-[#000000] border-[#dadad3] hover:bg-[#f6f6f3]"
+                    }`}
+                  >
+                    {dpi} DPI
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <!-- Convert Button -->
+          <button
+            type="button"
+            id="cvtBtn"
+            disabled
+            class="w-full h-12 rounded-[16px] bg-[#e60023] hover:bg-[#cc001f] disabled:bg-[#f6f6f3] disabled:text-[#91918c] disabled:cursor-not-allowed text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            <span id="cvtBtnText">Convert PDF to JPG</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           PANEL 2: Images to PDF (iLovePDF Style)
+      ══════════════════════════════════════════ -->
+      <div id="panelImgToPdf" class="hidden">
+        <div class="flex items-center justify-between pb-5 border-b border-[#e5e5e0] mb-6">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-[#e60023] flex items-center justify-center text-white text-xs font-bold">🖼️</span>
+            <span class="text-sm font-bold text-[#000000]">Images to PDF Converter</span>
+          </div>
+          <span class="text-xs font-semibold text-[#103c25] bg-[#c7f0da] px-3 py-1 rounded-full border border-[#103c25]/20">
+            Interactive Stage
+          </span>
+        </div>
+
+        <!-- Initial Upload Drop Zone (Shown when 0 images selected) -->
+        <div
+          id="imgDz"
+          class="relative bg-[#f6f6f3] hover:bg-[#e5e5e0] border-2 border-dashed border-[#c8c8c1] hover:border-[#e60023] rounded-[16px] p-8 md:p-10 text-center cursor-pointer transition-all duration-200"
+        >
+          <input
+            type="file"
+            id="imgInput"
+            multiple
+            accept="image/png, image/jpeg, image/webp, image/bmp, image/tiff, image/gif"
+            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          />
+          <div class="w-12 h-12 rounded-full bg-[#ffffff] flex items-center justify-center text-[#e60023] mx-auto mb-3 shadow-sm border border-[#dadad3]">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </div>
+          <p id="imgDzLabel" class="text-sm font-bold text-[#000000] mb-1">
+            Drop multiple images here, or <span class="text-[#e60023] underline underline-offset-2">browse files</span>
+          </p>
+          <p id="imgDzLimitText" class="text-xs text-[#62625b]">
+            Supports JPG, PNG, WebP, TIFF, BMP · Up to 100 MB for guests
+          </p>
+        </div>
+
+        <!-- ── Interactive Image Stage (iLovePDF signature canvas) ── -->
+        <div id="imgStage" class="hidden">
+          <!-- Stage Top Bar: Count + Sorting + Add More + Clear All -->
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#e5e5e0] flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span id="imgCountBadge" class="text-xs font-bold text-[#000000]">0 images</span>
+              <span id="imgTotalSizeBadge" class="text-[11px] text-[#62625b] bg-[#f6f6f3] px-2.5 py-0.5 rounded-full border border-[#dadad3]">0 MB</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <!-- Sort A-Z button -->
+              <button
+                type="button"
+                id="sortImagesBtn"
+                class="px-2.5 py-1 text-xs font-semibold rounded-full bg-[#f6f6f3] hover:bg-[#e5e5e0] text-[#000000] border border-[#dadad3] transition-colors cursor-pointer flex items-center gap-1"
+                title="Sort by file name"
+              >
+                <span>🔤</span>
+                <span>Sort A-Z</span>
+              </button>
+              <!-- Clear all -->
+              <button
+                type="button"
+                id="clearImagesBtn"
+                class="px-2.5 py-1 text-xs font-semibold text-[#e60023] hover:bg-red-50 rounded-full transition-colors cursor-pointer"
+              >
+                Clear all
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Grid of Image Tiles (Rotate, Reorder, Remove) -->
+          <div id="imgTilesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[320px] overflow-y-auto p-1 scrollbar-thin">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Add More Images Drop Banner -->
+          <div class="mt-3 relative bg-[#f6f6f3] hover:bg-[#e5e5e0] border-2 border-dashed border-[#dadad3] hover:border-[#e60023] rounded-[14px] p-3 text-center cursor-pointer transition-colors">
+            <input
+              type="file"
+              id="imgAddMoreInput"
+              multiple
+              accept="image/png, image/jpeg, image/webp, image/bmp, image/tiff, image/gif"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+            />
+            <span class="text-xs font-bold text-[#e60023] flex items-center justify-center gap-1.5">
+              <span>➕</span>
+              <span>Add more images</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- ── iLovePDF Signature Settings Panel ── -->
+        <div id="imgSettingsPanel" class="mt-6 pt-6 border-t border-[#e5e5e0]">
+          
+          <!-- 1. Page Orientation (iLovePDF visual cards) -->
+          <div class="mb-5">
+            <span class="text-xs font-bold text-[#000000] block mb-2">Page Orientation</span>
+            <div class="grid grid-cols-2 gap-3" id="orientationCards">
+              <button
+                type="button"
+                data-orient="portrait"
+                class="orient-card h-14 rounded-[14px] border-2 border-[#000000] bg-[#ffffff] p-2 flex items-center justify-center gap-3 font-bold text-xs text-[#000000] cursor-pointer transition-all shadow-xs"
+              >
+                <!-- Portrait page icon -->
+                <div class="w-5 h-7 border-2 border-[#000000] rounded-xs bg-[#f6f6f3]"></div>
+                <span>Portrait</span>
+              </button>
+              <button
+                type="button"
+                data-orient="landscape"
+                class="orient-card h-14 rounded-[14px] border border-[#dadad3] bg-[#f6f6f3] hover:bg-[#e5e5e0] p-2 flex items-center justify-center gap-3 font-bold text-xs text-[#62625b] hover:text-[#000000] cursor-pointer transition-all"
+              >
+                <!-- Landscape page icon -->
+                <div class="w-7 h-5 border-2 border-[#62625b] rounded-xs bg-[#ffffff]"></div>
+                <span>Landscape</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Page Size & Margin Row (iLovePDF style) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+            
+            <!-- Page Size -->
+            <div>
+              <span class="text-xs font-bold text-[#000000] block mb-2">Page Size</span>
+              <div class="flex flex-col gap-1.5" id="pageSizeOptions">
+                {[
+                  { val: "fit", label: "Fit (Same size as image)", desc: "No white borders" },
+                  { val: "a4", label: "A4 (297 × 210 mm)", desc: "Standard document" },
+                  { val: "letter", label: "US Letter (215 × 279 mm)", desc: "North America" },
+                ].map(({ val, label, desc }, i) => (
+                  <button
+                    type="button"
+                    data-size={val}
+                    class={`page-size-btn text-left p-2.5 rounded-[12px] border transition-all cursor-pointer flex items-center justify-between ${
+                      i === 0
+                        ? "bg-[#ffffff] border-[#000000] shadow-xs"
+                        : "bg-[#f6f6f3] border-transparent hover:bg-[#e5e5e0]"
+                    }`}
+                  >
+                    <div>
+                      <p class="text-xs font-bold text-[#000000] leading-none">{label}</p>
+                      <p class="text-[10px] text-[#62625b] mt-0.5">{desc}</p>
+                    </div>
+                    <span class="radio-indicator w-3.5 h-3.5 rounded-full border-2 border-[#000000] flex items-center justify-center">
+                      {i === 0 && <span class="w-1.5 h-1.5 rounded-full bg-[#000000]"></span>}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- Page Margin (iLovePDF 3 cards: None, Small, Big) -->
+            <div>
+              <span class="text-xs font-bold text-[#000000] block mb-2">Margin</span>
+              <div class="grid grid-cols-3 gap-2" id="marginCards">
+                {[
+                  { val: "none", label: "No Margin", iconBorder: "p-0.5" },
+                  { val: "small", label: "Small", iconBorder: "p-1.5" },
+                  { val: "big", label: "Big", iconBorder: "p-2.5" },
+                ].map(({ val, label, iconBorder }, i) => (
+                  <button
+                    type="button"
+                    data-margin={val}
+                    class={`margin-card h-24 rounded-[12px] border transition-all cursor-pointer flex flex-col items-center justify-center p-2 text-center ${
+                      i === 0
+                        ? "bg-[#ffffff] border-[#000000] shadow-xs"
+                        : "bg-[#f6f6f3] border-[#dadad3] hover:bg-[#e5e5e0]"
+                    }`}
+                  >
+                    <!-- Mini visual preview of margin box -->
+                    <div class={`w-9 h-11 border border-[#000000] rounded-xs bg-[#ffffff] mb-1.5 flex items-center justify-center ${iconBorder}`}>
+                      <div class="w-full h-full bg-[#e5e5e0] rounded-2xs"></div>
+                    </div>
+                    <span class="text-[11px] font-bold text-[#000000]">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 3. iLovePDF Merge Checkbox -->
+          <div class="flex items-center gap-3 p-3 bg-[#f6f6f3] rounded-[14px] border border-[#e5e5e0] mb-6">
+            <input
+              type="checkbox"
+              id="mergeAllCheck"
+              checked
+              class="w-4 h-4 rounded-md accent-[#e60023] cursor-pointer"
+            />
+            <label for="mergeAllCheck" class="text-xs font-bold text-[#000000] cursor-pointer select-none">
+              Merge all images into one single PDF file
+              <span class="block text-[11px] font-normal text-[#62625b]">Uncheck if you prefer individual PDF files in a ZIP</span>
+            </label>
+          </div>
+
+          <!-- Convert Button (Pinterest Red Primary CTA) -->
+          <button
+            type="button"
+            id="createPdfBtn"
+            disabled
+            class="w-full h-12 rounded-[16px] bg-[#e60023] hover:bg-[#cc001f] disabled:bg-[#f6f6f3] disabled:text-[#91918c] disabled:cursor-not-allowed text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            <span id="createPdfBtnText">Convert to PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Large File Alert Card (>100MB) ── -->
+      <div id="largeFileAlert" class="hidden mt-4 p-4 bg-[#fffbeb] border border-[#fde68a] rounded-[16px]">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-full bg-[#fef3c7] flex items-center justify-center text-lg shrink-0">
+            📦
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 flex-wrap mb-1">
+              <span class="text-xs font-bold text-[#92400e]">Account Required for Files Over 100 MB</span>
+              <span id="largeFileSizeBadge" class="text-[10px] font-bold bg-[#fef3c7] text-[#b45309] px-2 py-0.5 rounded-full border border-[#fcd34d]">120 MB</span>
+            </div>
+            <p class="text-xs text-[#78350f] leading-relaxed">
+              Anonymous guest uploads are capped at 100 MB. Create a free account to unlock conversions up to <strong>1 GB</strong> instantly!
+            </p>
+            <div class="flex gap-2 mt-3 flex-wrap">
+              <button
+                type="button"
+                id="largeFileSignupBtn"
+                class="h-9 px-4 rounded-xl bg-[#e60023] hover:bg-[#cc001f] text-white text-xs font-bold transition-colors cursor-pointer shadow-sm"
+              >
+                Sign up for free (Unlock 1 GB)
+              </button>
+              <button
+                type="button"
+                id="largeFileLoginBtn"
+                class="h-9 px-3.5 rounded-xl bg-[#ffffff] border border-[#dadad3] hover:bg-[#f6f6f3] text-[#000000] text-xs font-bold transition-colors cursor-pointer"
+              >
+                Sign in
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Shared Progress Box ── -->
+      <div id="progBox" class="hidden mt-4 p-4 bg-[#f6f6f3] rounded-[16px] border border-[#e5e5e0]">
+        <div class="flex items-center gap-3 mb-2.5">
+          <div class="w-4 h-4 border-2 border-[#e60023] border-t-transparent rounded-full animate-spin shrink-0"></div>
+          <span id="progTitle" class="text-xs font-bold text-[#000000]">Processing files…</span>
+        </div>
+        <div class="h-2 bg-[#e5e5e0] rounded-full overflow-hidden">
+          <div id="progBar" class="h-full bg-[#e60023] rounded-full transition-all duration-200" style="width: 0%"></div>
+        </div>
+        <p id="progLbl" class="text-[11px] text-[#62625b] mt-2 font-medium">Preparing…</p>
+      </div>
+
+      <!-- ── Shared Done State ── -->
+      <div id="doneBox" class="hidden mt-4 p-4 bg-[#c7f0da]/50 border border-[#103c25]/20 rounded-[16px] items-center gap-3 flex-wrap">
+        <div class="w-8 h-8 rounded-full bg-[#103c25] text-white flex items-center justify-center font-bold text-sm shrink-0">
+          ✓
+        </div>
+        <div class="flex-1">
+          <p id="doneTitle" class="text-xs font-bold text-[#103c25]">Conversion complete!</p>
+          <p id="doneLbl" class="text-[11px] text-[#103c25]/80 font-medium">Ready for download</p>
+        </div>
+        <div class="flex gap-2">
+          <button
+            type="button"
+            id="dlBtn"
+            class="h-9 px-4 rounded-full bg-[#e60023] hover:bg-[#cc001f] text-white text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            <span id="dlBtnText">Download PDF</span>
+          </button>
+          <button
+            type="button"
+            id="rstBtn"
+            class="h-9 px-3.5 rounded-full bg-[#ffffff] border border-[#dadad3] hover:bg-[#f6f6f3] text-[#000000] text-xs font-bold transition-colors cursor-pointer"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Trust Strip -->
+    <div class="mt-8 flex flex-wrap justify-center gap-6 text-[#62625b] text-xs font-medium">
+      <span class="flex items-center gap-1.5">🔒 <span>SSL Encrypted</span></span>
+      <span class="flex items-center gap-1.5">🗑️ <span>Zero Server Retention</span></span>
+      <span class="flex items-center gap-1.5">⚡ <span>Fast Client-Side Processing</span></span>
+      <span class="flex items-center gap-1.5">✨ <span>Pinterest-Crafted Quality</span></span>
+    </div>
+
+  </div>
+</section>
+
+<!-- Load pdf.js, JSZip, and jsPDF from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  declare const pdfjsLib: any;
+  declare const JSZip: any;
+  declare const jspdf: any;
+
+  window.addEventListener('load', () => {
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  });
+
+  /* ── Mode State: 'pdf-to-img' vs 'img-to-pdf' ── */
+  let currentMode: 'pdf-to-img' | 'img-to-pdf' = 'pdf-to-img';
+  const modeBtnPdfToImg = document.getElementById('modeBtnPdfToImg')!;
+  const modeBtnImgToPdf = document.getElementById('modeBtnImgToPdf')!;
+  const panelPdfToImg = document.getElementById('panelPdfToImg')!;
+  const panelImgToPdf = document.getElementById('panelImgToPdf')!;
+  const heroHeadline = document.getElementById('heroHeadline')!;
+  const heroSubtext = document.getElementById('heroSubtext')!;
+  const mainConverterCard = document.getElementById('mainConverterCard')!;
+
+  function switchMode(mode: 'pdf-to-img' | 'img-to-pdf') {
+    currentMode = mode;
+    hideAllResults();
+    if (mode === 'pdf-to-img') {
+      modeBtnPdfToImg.className = 'h-10 px-5 rounded-full text-xs font-bold transition-all cursor-pointer bg-[#000000] text-white shadow-xs flex items-center gap-2';
+      modeBtnImgToPdf.className = 'h-10 px-5 rounded-full text-xs font-bold transition-all cursor-pointer bg-transparent text-[#62625b] hover:text-[#000000] hover:bg-[#f6f6f3] flex items-center gap-2';
+      panelPdfToImg.classList.remove('hidden');
+      panelImgToPdf.classList.add('hidden');
+      mainConverterCard.className = 'w-full max-w-[640px] bg-[#ffffff] rounded-[16px] border border-[#e5e5e0] shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 md:p-8 transition-all duration-300';
+      heroHeadline.innerHTML = 'Convert PDF ideas to <span class="text-[#e60023]">every image format</span>';
+      heroSubtext.textContent = 'Transform PDF pages into high-resolution JPG, PNG, WebP, TIFF, and BMP images in seconds. Free, private, and browser-powered.';
+    } else {
+      modeBtnImgToPdf.className = 'h-10 px-5 rounded-full text-xs font-bold transition-all cursor-pointer bg-[#000000] text-white shadow-xs flex items-center gap-2';
+      modeBtnPdfToImg.className = 'h-10 px-5 rounded-full text-xs font-bold transition-all cursor-pointer bg-transparent text-[#62625b] hover:text-[#000000] hover:bg-[#f6f6f3] flex items-center gap-2';
+      panelImgToPdf.classList.remove('hidden');
+      panelPdfToImg.classList.add('hidden');
+      // Slightly wider card for comfortable iLovePDF grid editing
+      mainConverterCard.className = 'w-full max-w-[720px] bg-[#ffffff] rounded-[16px] border border-[#e5e5e0] shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 md:p-8 transition-all duration-300';
+      heroHeadline.innerHTML = 'Convert multiple images to <span class="text-[#e60023]">a clean PDF pin</span>';
+      heroSubtext.textContent = 'Reorder, rotate, and combine JPG, PNG, WebP, and photo pins into a tailored PDF with iLovePDF-inspired layout control.';
+    }
+  }
+
+  modeBtnPdfToImg?.addEventListener('click', () => switchMode('pdf-to-img'));
+  modeBtnImgToPdf?.addEventListener('click', () => switchMode('img-to-pdf'));
+
+  /* ── General State ── */
+  let selectedPdfFile: File | null = null;
+  interface ImageItem {
+    file: File;
+    rotation: number; // 0, 90, 180, 270
+    previewUrl: string;
+  }
+  let selectedImagesList: ImageItem[] = [];
+
+  let downloadedResultBlob: Blob | null = null;
+  let downloadedFileName = 'download.zip';
+
+  let currentFormat: 'jpg' | 'png' | 'webp' | 'tiff' | 'bmp' = 'jpg';
+  let currentDpi = 150;
+  const MAX_FREE_SIZE_BYTES = 100 * 1024 * 1024; // 100 MB
+  const MAX_PRO_SIZE_BYTES = 1024 * 1024 * 1024; // 1 GB
+  let pendingLargeFile: any = null;
+
+  function isUserLoggedIn(): boolean {
+    return Boolean(localStorage.getItem('pdfspark_user'));
+  }
+
+  /* ── Shared UI Refs ── */
+  const largeFileAlert = document.getElementById('largeFileAlert')!;
+  const largeFileSizeBadge = document.getElementById('largeFileSizeBadge')!;
+  const progBox = document.getElementById('progBox')!;
+  const progBar = document.getElementById('progBar')!;
+  const progTitle = document.getElementById('progTitle')!;
+  const progLbl = document.getElementById('progLbl')!;
+  const doneBox = document.getElementById('doneBox')!;
+  const doneTitle = document.getElementById('doneTitle')!;
+  const doneLbl = document.getElementById('doneLbl')!;
+  const dlBtn = document.getElementById('dlBtn') as HTMLButtonElement;
+  const dlBtnText = document.getElementById('dlBtnText')!;
+  const rstBtn = document.getElementById('rstBtn') as HTMLButtonElement;
+
+  function hideAllResults() {
+    progBox.classList.add('hidden');
+    doneBox.classList.add('hidden');
+    doneBox.classList.remove('flex');
+    largeFileAlert.classList.add('hidden');
+  }
+
+  const setProgress = (pct: number, title: string, label: string) => {
+    progBar.style.width = pct + '%';
+    progTitle.textContent = title;
+    progLbl.textContent = label;
+  };
+
+  /* ══════════════════════════════════════════════════════════
+     TOOL 1: PDF to Images Logic
+  ══════════════════════════════════════════════════════════ */
+  const fi = document.getElementById('fi') as HTMLInputElement;
+  const cvtBtn = document.getElementById('cvtBtn') as HTMLButtonElement;
+  const cvtBtnText = document.getElementById('cvtBtnText') as HTMLElement;
+  const dz = document.getElementById('dz')!;
+  const dzL = document.getElementById('dzLabel')!;
+  const dzLimitText = document.getElementById('dzLimitText');
+  const qs = document.getElementById('qSlider') as HTMLInputElement;
+  const qVal = document.getElementById('qVal')!;
+
+  const fmtBtns = document.querySelectorAll<HTMLButtonElement>('#fmtTabs button');
+  fmtBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const chosen = btn.dataset.fmt as any;
+      if (!chosen) return;
+      currentFormat = chosen;
+      fmtBtns.forEach(x => {
+        x.className = 'filter-chip-btn relative px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 bg-[#f6f6f3] text-[#000000] border-transparent hover:bg-[#e5e5e0]';
+      });
+      btn.className = 'filter-chip-btn relative px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 bg-[#000000] text-white border-[#000000]';
+      if (cvtBtnText) cvtBtnText.textContent = `Convert PDF to ${currentFormat.toUpperCase()}`;
+      if (currentFormat === 'png' || currentFormat === 'tiff' || currentFormat === 'bmp') {
+        qVal.textContent = 'Lossless (100%)';
+      } else {
+        qVal.textContent = qs.value + '%';
+      }
+    });
+  });
+
+  const dpiBtns = document.querySelectorAll<HTMLButtonElement>('#dpiTabs button');
+  dpiBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentDpi = parseInt(btn.dataset.dpi || '150');
+      dpiBtns.forEach(x => {
+        x.className = 'flex-1 py-1.5 text-xs font-bold rounded-full border transition-all cursor-pointer bg-[#ffffff] text-[#000000] border-[#dadad3] hover:bg-[#f6f6f3]';
+      });
+      btn.className = 'flex-1 py-1.5 text-xs font-bold rounded-full border transition-all cursor-pointer bg-[#000000] text-white border-[#000000]';
+    });
+  });
+
+  qs?.addEventListener('input', () => {
+    if (currentFormat === 'png' || currentFormat === 'tiff' || currentFormat === 'bmp') {
+      qVal.textContent = 'Lossless (100%)';
+    } else {
+      qVal.textContent = qs.value + '%';
+    }
+  });
+
+  const setPdfFile = (f: File) => {
+    if (f.type !== 'application/pdf') {
+      alert('Please select a valid PDF file.');
+      return;
+    }
+    const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+
+    if (f.size > MAX_FREE_SIZE_BYTES) {
+      if (!isUserLoggedIn()) {
+        pendingLargeFile = f;
+        largeFileSizeBadge.textContent = `${sizeMB} MB`;
+        largeFileAlert.classList.remove('hidden');
+        dzL.innerHTML = `⚠️ <strong class="text-[#e60023]">${f.name}</strong> (${sizeMB} MB) exceeds 100 MB limit`;
+        cvtBtn.disabled = true;
+
+        if ((window as any).openAuthModal) {
+          (window as any).openAuthModal(true, {
+            title: `File is ${sizeMB} MB (Free limit: 100 MB)`,
+            text: `"${f.name}" is ${sizeMB} MB. Create a free account to convert files up to 1 GB!`
+          });
+        }
+        return;
+      }
+    }
+
+    largeFileAlert.classList.add('hidden');
+    pendingLargeFile = null;
+    selectedPdfFile = f;
+    cvtBtn.disabled = false;
+    const proBadge = f.size > MAX_FREE_SIZE_BYTES ? ` <span class="text-xs text-[#103c25] font-bold bg-[#c7f0da] px-2 py-0.5 rounded-full">(⚡ ${sizeMB} MB Pro)</span>` : '';
+    dzL.innerHTML = `✅ <strong>${f.name}</strong>${proBadge}`;
+    if (cvtBtnText) cvtBtnText.textContent = `Convert PDF to ${currentFormat.toUpperCase()}`;
+  };
+
+  fi?.addEventListener('change', e => {
+    const f = (e.target as HTMLInputElement).files?.[0];
+    if (f) setPdfFile(f);
+  });
+  dz?.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('border-[#e60023]', 'bg-[#e5e5e0]'); });
+  dz?.addEventListener('dragleave', () => { dz.classList.remove('border-[#e60023]', 'bg-[#e5e5e0]'); });
+  dz?.addEventListener('drop', e => {
+    e.preventDefault();
+    dz.classList.remove('border-[#e60023]', 'bg-[#e5e5e0]');
+    const f = e.dataTransfer?.files?.[0];
+    if (f) setPdfFile(f);
+  });
+
+  // Custom Encoders
+  function canvasToBmpBlob(canvas: HTMLCanvasElement): Blob {
+    const ctx = canvas.getContext('2d')!;
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const width = canvas.width;
+    const height = canvas.height;
+    const rowSize = Math.floor((24 * width + 31) / 32) * 4;
+    const pixelArraySize = rowSize * height;
+    const fileSize = 54 + pixelArraySize;
+    const buffer = new ArrayBuffer(fileSize);
+    const view = new DataView(buffer);
+
+    view.setUint16(0, 0x4D42, false);
+    view.setUint32(2, fileSize, true);
+    view.setUint32(6, 0, true);
+    view.setUint32(10, 54, true);
+
+    view.setUint32(14, 40, true);
+    view.setInt32(18, width, true);
+    view.setInt32(22, height, true);
+    view.setUint16(26, 1, true);
+    view.setUint16(28, 24, true);
+    view.setUint32(30, 0, true);
+    view.setUint32(34, pixelArraySize, true);
+    view.setInt32(38, 2835, true);
+    view.setInt32(42, 2835, true);
+    view.setUint32(46, 0, true);
+    view.setUint32(50, 0, true);
+
+    const data = imgData.data;
+    let offset = 54;
+    for (let y = height - 1; y >= 0; y--) {
+      let rowOffset = offset;
+      for (let x = 0; x < width; x++) {
+        const i = (y * width + x) * 4;
+        view.setUint8(rowOffset++, data[i + 2]);
+        view.setUint8(rowOffset++, data[i + 1]);
+        view.setUint8(rowOffset++, data[i]);
+      }
+      while (rowOffset < offset + rowSize) {
+        view.setUint8(rowOffset++, 0);
+      }
+      offset += rowSize;
+    }
+    return new Blob([buffer], { type: 'image/bmp' });
+  }
+
+  function canvasToTiffBlob(canvas: HTMLCanvasElement, dpi: number): Blob {
+    const ctx = canvas.getContext('2d')!;
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const width = canvas.width;
+    const height = canvas.height;
+    const rgbLength = width * height * 3;
+    const totalSize = 168 + rgbLength;
+    const buffer = new ArrayBuffer(totalSize);
+    const view = new DataView(buffer);
+
+    view.setUint16(0, 0x4949, false);
+    view.setUint16(2, 42, true);
+    view.setUint32(4, 8, true);
+    view.setUint16(8, 11, true);
+
+    function writeTag(offset: number, tagId: number, type: number, count: number, valOrOffset: number) {
+      view.setUint16(offset, tagId, true);
+      view.setUint16(offset + 2, type, true);
+      view.setUint32(offset + 4, count, true);
+      view.setUint32(offset + 8, valOrOffset, true);
+    }
+
+    let tagOffset = 10;
+    writeTag(tagOffset, 0x0100, 4, 1, width); tagOffset += 12;
+    writeTag(tagOffset, 0x0101, 4, 1, height); tagOffset += 12;
+    writeTag(tagOffset, 0x0102, 3, 3, 146); tagOffset += 12;
+    writeTag(tagOffset, 0x0103, 3, 1, 1); tagOffset += 12;
+    writeTag(tagOffset, 0x0106, 3, 1, 2); tagOffset += 12;
+    writeTag(tagOffset, 0x0111, 4, 1, 168); tagOffset += 12;
+    writeTag(tagOffset, 0x0115, 3, 1, 3); tagOffset += 12;
+    writeTag(tagOffset, 0x0116, 4, 1, height); tagOffset += 12;
+    writeTag(tagOffset, 0x0117, 4, 1, rgbLength); tagOffset += 12;
+    writeTag(tagOffset, 0x011A, 5, 1, 152); tagOffset += 12;
+    writeTag(tagOffset, 0x011B, 5, 1, 160); tagOffset += 12;
+
+    view.setUint32(tagOffset, 0, true);
+    view.setUint16(146, 8, true);
+    view.setUint16(148, 8, true);
+    view.setUint16(150, 8, true);
+    view.setUint32(152, dpi, true);
+    view.setUint32(156, 1, true);
+    view.setUint32(160, dpi, true);
+    view.setUint32(164, 1, true);
+
+    const src = imgData.data;
+    const dest = new Uint8Array(buffer, 168, rgbLength);
+    let srcIdx = 0;
+    let destIdx = 0;
+    const totalPixels = width * height;
+    for (let p = 0; p < totalPixels; p++) {
+      dest[destIdx++] = src[srcIdx++];
+      dest[destIdx++] = src[srcIdx++];
+      dest[destIdx++] = src[srcIdx++];
+      srcIdx++;
+    }
+    return new Blob([buffer], { type: 'image/tiff' });
+  }
+
+  async function convertCanvasToBlob(canvas: HTMLCanvasElement, fmt: string, quality: number, dpi: number): Promise<Blob> {
+    if (fmt === 'bmp') return canvasToBmpBlob(canvas);
+    if (fmt === 'tiff') return canvasToTiffBlob(canvas, dpi);
+    if (fmt === 'png') {
+      return new Promise((res, rej) => canvas.toBlob(b => b ? res(b) : rej(new Error('PNG fail')), 'image/png'));
+    }
+    if (fmt === 'webp') {
+      return new Promise((res, rej) => canvas.toBlob(b => b ? res(b) : rej(new Error('WebP fail')), 'image/webp', quality));
+    }
+    return new Promise((res, rej) => canvas.toBlob(b => b ? res(b) : rej(new Error('JPG fail')), 'image/jpeg', quality));
+  }
+
+  cvtBtn?.addEventListener('click', async () => {
+    if (!selectedPdfFile) return;
+
+    const fmt = currentFormat;
+    const dpi = currentDpi;
+    const quality = parseInt(qs.value) / 100;
+    const scale = dpi / 72;
+
+    cvtBtn.style.display = 'none';
+    progBox.classList.remove('hidden');
+    doneBox.classList.add('hidden');
+
+    try {
+      setProgress(5, 'Loading PDF…', 'Initializing document reader');
+      const arrayBuffer = await selectedPdfFile.arrayBuffer();
+      const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const totalPages = pdfDoc.numPages;
+
+      setProgress(10, `Loaded ${totalPages} page${totalPages > 1 ? 's' : ''}`, 'Rendering pages to canvas');
+      const zip = new JSZip();
+      const baseName = selectedPdfFile.name.replace(/\.pdf$/i, '');
+
+      for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+        const pct = 10 + Math.round(((pageNum - 1) / totalPages) * 78);
+        setProgress(pct, `Converting pages…`, `Rendering page ${pageNum} of ${totalPages} to ${fmt.toUpperCase()}`);
+
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(viewport.width);
+        canvas.height = Math.round(viewport.height);
+        const ctx = canvas.getContext('2d')!;
+
+        if (fmt !== 'png') {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        const blob = await convertCanvasToBlob(canvas, fmt, quality, dpi);
+        const fileName = `${baseName}_page_${String(pageNum).padStart(3, '0')}.${fmt}`;
+        zip.file(fileName, blob);
+      }
+
+      setProgress(92, 'Packaging ZIP archive…', 'Compressing output files');
+      const content = await zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 }
+      });
+
+      downloadedResultBlob = content;
+      downloadedFileName = `${selectedPdfFile.name.replace(/\.pdf$/i, '')}_${fmt.toUpperCase()}_images.zip`;
+
+      setProgress(100, 'Complete!', 'All pages converted successfully');
+      await new Promise(r => setTimeout(r, 200));
+
+      progBox.classList.add('hidden');
+      doneBox.classList.remove('hidden');
+      doneBox.classList.add('flex');
+      doneTitle.textContent = 'PDF to Images complete!';
+      doneLbl.textContent = `${totalPages} page${totalPages > 1 ? 's' : ''} converted to ${fmt.toUpperCase()} · ${(content.size / 1024).toFixed(0)} KB`;
+      dlBtnText.textContent = 'Download ZIP';
+
+    } catch (err) {
+      console.error(err);
+      progBox.classList.add('hidden');
+      cvtBtn.style.display = 'flex';
+      alert('Conversion failed: ' + (err as Error).message);
+    }
+  });
+
+  /* ══════════════════════════════════════════════════════════
+     TOOL 2: Images to PDF (iLovePDF Inspired)
+  ══════════════════════════════════════════════════════════ */
+  const imgInput = document.getElementById('imgInput') as HTMLInputElement;
+  const imgAddMoreInput = document.getElementById('imgAddMoreInput') as HTMLInputElement;
+  const imgDz = document.getElementById('imgDz')!;
+  const imgStage = document.getElementById('imgStage')!;
+  const imgTilesGrid = document.getElementById('imgTilesGrid')!;
+  const imgCountBadge = document.getElementById('imgCountBadge')!;
+  const imgTotalSizeBadge = document.getElementById('imgTotalSizeBadge')!;
+  const sortImagesBtn = document.getElementById('sortImagesBtn')!;
+  const clearImagesBtn = document.getElementById('clearImagesBtn')!;
+  const createPdfBtn = document.getElementById('createPdfBtn') as HTMLButtonElement;
+  const createPdfBtnText = document.getElementById('createPdfBtnText')!;
+  const mergeAllCheck = document.getElementById('mergeAllCheck') as HTMLInputElement;
+
+  // iLovePDF Orientation State
+  let currentImgOrientation: 'portrait' | 'landscape' = 'portrait';
+  const orientCards = document.querySelectorAll<HTMLButtonElement>('#orientationCards .orient-card');
+  orientCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const o = card.dataset.orient as 'portrait' | 'landscape';
+      if (!o) return;
+      currentImgOrientation = o;
+      orientCards.forEach(c => {
+        c.className = 'orient-card h-14 rounded-[14px] border border-[#dadad3] bg-[#f6f6f3] hover:bg-[#e5e5e0] p-2 flex items-center justify-center gap-3 font-bold text-xs text-[#62625b] hover:text-[#000000] cursor-pointer transition-all';
+        c.querySelector('div')!.className = c.dataset.orient === 'portrait' ? 'w-5 h-7 border-2 border-[#62625b] rounded-xs bg-[#ffffff]' : 'w-7 h-5 border-2 border-[#62625b] rounded-xs bg-[#ffffff]';
+      });
+      card.className = 'orient-card h-14 rounded-[14px] border-2 border-[#000000] bg-[#ffffff] p-2 flex items-center justify-center gap-3 font-bold text-xs text-[#000000] cursor-pointer transition-all shadow-xs';
+      card.querySelector('div')!.className = card.dataset.orient === 'portrait' ? 'w-5 h-7 border-2 border-[#000000] rounded-xs bg-[#f6f6f3]' : 'w-7 h-5 border-2 border-[#000000] rounded-xs bg-[#f6f6f3]';
+    });
+  });
+
+  // iLovePDF Page Size State
+  let currentImgPageSize: 'fit' | 'a4' | 'letter' = 'fit';
+  const sizeBtns = document.querySelectorAll<HTMLButtonElement>('#pageSizeOptions .page-size-btn');
+  sizeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentImgPageSize = btn.dataset.size as any || 'fit';
+      sizeBtns.forEach(b => {
+        b.className = 'page-size-btn text-left p-2.5 rounded-[12px] border transition-all cursor-pointer flex items-center justify-between bg-[#f6f6f3] border-transparent hover:bg-[#e5e5e0]';
+        const ind = b.querySelector('.radio-indicator')!;
+        ind.innerHTML = '';
+      });
+      btn.className = 'page-size-btn text-left p-2.5 rounded-[12px] border transition-all cursor-pointer flex items-center justify-between bg-[#ffffff] border-[#000000] shadow-xs';
+      const ind = btn.querySelector('.radio-indicator')!;
+      ind.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-[#000000]"></span>';
+    });
+  });
+
+  // iLovePDF Margin State
+  let currentImgMargin: 'none' | 'small' | 'big' = 'none';
+  const marginCards = document.querySelectorAll<HTMLButtonElement>('#marginCards .margin-card');
+  marginCards.forEach(card => {
+    card.addEventListener('click', () => {
+      currentImgMargin = card.dataset.margin as any || 'none';
+      marginCards.forEach(c => {
+        c.className = 'margin-card h-24 rounded-[12px] border transition-all cursor-pointer flex flex-col items-center justify-center p-2 text-center bg-[#f6f6f3] border-[#dadad3] hover:bg-[#e5e5e0]';
+      });
+      card.className = 'margin-card h-24 rounded-[12px] border transition-all cursor-pointer flex flex-col items-center justify-center p-2 text-center bg-[#ffffff] border-[#000000] shadow-xs';
+    });
+  });
+
+  // Render Image Canvas / Stage (iLovePDF Style)
+  function renderImageStage() {
+    imgTilesGrid.innerHTML = '';
+
+    if (selectedImagesList.length === 0) {
+      imgStage.classList.add('hidden');
+      imgDz.classList.remove('hidden');
+      createPdfBtn.disabled = true;
+      return;
+    }
+
+    imgDz.classList.add('hidden');
+    imgStage.classList.remove('hidden');
+    createPdfBtn.disabled = false;
+
+    // Total size calculation
+    const totalBytes = selectedImagesList.reduce((acc, item) => acc + item.file.size, 0);
+    const totalMB = (totalBytes / (1024 * 1024)).toFixed(1);
+    imgCountBadge.textContent = `${selectedImagesList.length} image${selectedImagesList.length > 1 ? 's' : ''}`;
+    imgTotalSizeBadge.textContent = `${totalMB} MB`;
+    createPdfBtnText.textContent = `Convert ${selectedImagesList.length} Images to PDF →`;
+
+    selectedImagesList.forEach((item, index) => {
+      // Tile card
+      const tile = document.createElement('div');
+      tile.className = 'relative bg-[#f6f6f3] border border-[#dadad3] rounded-[16px] p-2 flex flex-col items-center group hover:border-[#000000] transition-all';
+
+      // Thumbnail Image Frame with rotation
+      const frame = document.createElement('div');
+      frame.className = 'w-full h-28 rounded-[12px] overflow-hidden bg-[#ffffff] flex items-center justify-center p-1 relative border border-[#e5e5e0]';
+
+      const img = document.createElement('img');
+      img.src = item.previewUrl;
+      img.className = 'max-w-full max-h-full object-contain transition-transform duration-200';
+      img.style.transform = `rotate(${item.rotation}deg)`;
+      frame.appendChild(img);
+      tile.appendChild(frame);
+
+      // Page Badge
+      const pageBadge = document.createElement('span');
+      pageBadge.className = 'absolute top-3 left-3 bg-[#000000]/75 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full';
+      pageBadge.textContent = `#${index + 1}`;
+      tile.appendChild(pageBadge);
+
+      // File name (truncated)
+      const nameP = document.createElement('p');
+      nameP.className = 'text-[11px] font-semibold text-[#000000] truncate w-full mt-1.5 text-center px-1';
+      nameP.textContent = item.file.name;
+      tile.appendChild(nameP);
+
+      // Hover Action Bar (iLovePDF signature: Rotate, Move, Delete)
+      const actions = document.createElement('div');
+      actions.className = 'flex items-center justify-center gap-1.5 mt-2 w-full pt-1.5 border-t border-[#e5e5e0]';
+
+      // Rotate Button 🔄
+      const rotateBtn = document.createElement('button');
+      rotateBtn.type = 'button';
+      rotateBtn.className = 'w-7 h-7 rounded-full bg-[#ffffff] border border-[#dadad3] hover:bg-[#e5e5e0] text-[#000000] flex items-center justify-center text-xs transition-colors cursor-pointer shadow-2xs';
+      rotateBtn.title = 'Rotate 90° clockwise';
+      rotateBtn.innerHTML = '🔄';
+      rotateBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        item.rotation = (item.rotation + 90) % 360;
+        img.style.transform = `rotate(${item.rotation}deg)`;
+      });
+      actions.appendChild(rotateBtn);
+
+      // Move Left Button ◀
+      if (index > 0) {
+        const moveLeftBtn = document.createElement('button');
+        moveLeftBtn.type = 'button';
+        moveLeftBtn.className = 'w-7 h-7 rounded-full bg-[#ffffff] border border-[#dadad3] hover:bg-[#e5e5e0] text-[#000000] flex items-center justify-center text-[10px] font-bold transition-colors cursor-pointer shadow-2xs';
+        moveLeftBtn.title = 'Move left';
+        moveLeftBtn.innerHTML = '◀';
+        moveLeftBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const temp = selectedImagesList[index - 1];
+          selectedImagesList[index - 1] = item;
+          selectedImagesList[index] = temp;
+          renderImageStage();
+        });
+        actions.appendChild(moveLeftBtn);
+      }
+
+      // Move Right Button ▶
+      if (index < selectedImagesList.length - 1) {
+        const moveRightBtn = document.createElement('button');
+        moveRightBtn.type = 'button';
+        moveRightBtn.className = 'w-7 h-7 rounded-full bg-[#ffffff] border border-[#dadad3] hover:bg-[#e5e5e0] text-[#000000] flex items-center justify-center text-[10px] font-bold transition-colors cursor-pointer shadow-2xs';
+        moveRightBtn.title = 'Move right';
+        moveRightBtn.innerHTML = '▶';
+        moveRightBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const temp = selectedImagesList[index + 1];
+          selectedImagesList[index + 1] = item;
+          selectedImagesList[index] = temp;
+          renderImageStage();
+        });
+        actions.appendChild(moveRightBtn);
+      }
+
+      // Delete Button 🗑️
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'w-7 h-7 rounded-full bg-[#ffffff] border border-[#dadad3] hover:bg-red-50 text-[#e60023] flex items-center justify-center text-xs transition-colors cursor-pointer shadow-2xs';
+      delBtn.title = 'Delete image';
+      delBtn.innerHTML = '🗑️';
+      delBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        URL.revokeObjectURL(item.previewUrl);
+        selectedImagesList.splice(index, 1);
+        renderImageStage();
+      });
+      actions.appendChild(delBtn);
+
+      tile.appendChild(actions);
+      imgTilesGrid.appendChild(tile);
+    });
+  }
+
+  function handleIncomingImages(files: FileList | File[]) {
+    const valid = Array.from(files).filter(f => f.type.startsWith('image/'));
+    if (valid.length === 0) {
+      alert('Please select valid image files (JPG, PNG, WebP, TIFF, BMP).');
+      return;
+    }
+
+    const newItems: ImageItem[] = valid.map(f => ({
+      file: f,
+      rotation: 0,
+      previewUrl: URL.createObjectURL(f)
+    }));
+
+    selectedImagesList = [...selectedImagesList, ...newItems];
+
+    // Check size limit (100 MB for guest)
+    const totalBytes = selectedImagesList.reduce((acc, it) => acc + it.file.size, 0);
+    const totalMB = (totalBytes / (1024 * 1024)).toFixed(1);
+
+    if (totalBytes > MAX_FREE_SIZE_BYTES) {
+      if (!isUserLoggedIn()) {
+        pendingLargeFile = selectedImagesList;
+        largeFileSizeBadge.textContent = `${totalMB} MB`;
+        largeFileAlert.classList.remove('hidden');
+        createPdfBtn.disabled = true;
+
+        if ((window as any).openAuthModal) {
+          (window as any).openAuthModal(true, {
+            title: `Batch is ${totalMB} MB (Free limit: 100 MB)`,
+            text: `Your images total ${totalMB} MB. Sign up for free in 10 seconds to convert batches up to 1 GB!`
+          });
+        }
+        return;
+      }
+    }
+
+    largeFileAlert.classList.add('hidden');
+    pendingLargeFile = null;
+    renderImageStage();
+  }
+
+  imgInput?.addEventListener('change', e => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files) handleIncomingImages(files);
+  });
+  imgAddMoreInput?.addEventListener('change', e => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files) handleIncomingImages(files);
+  });
+
+  imgDz?.addEventListener('dragover', e => { e.preventDefault(); imgDz.classList.add('border-[#e60023]', 'bg-[#e5e5e0]'); });
+  imgDz?.addEventListener('dragleave', () => { imgDz.classList.remove('border-[#e60023]', 'bg-[#e5e5e0]'); });
+  imgDz?.addEventListener('drop', e => {
+    e.preventDefault();
+    imgDz.classList.remove('border-[#e60023]', 'bg-[#e5e5e0]');
+    if (e.dataTransfer?.files) handleIncomingImages(e.dataTransfer.files);
+  });
+
+  // Sort A-Z by name
+  sortImagesBtn?.addEventListener('click', () => {
+    selectedImagesList.sort((a, b) => a.file.name.localeCompare(b.file.name));
+    renderImageStage();
+  });
+
+  // Clear all
+  clearImagesBtn?.addEventListener('click', () => {
+    selectedImagesList.forEach(item => URL.revokeObjectURL(item.previewUrl));
+    selectedImagesList = [];
+    imgInput.value = '';
+    imgAddMoreInput.value = '';
+    renderImageStage();
+  });
+
+  // Convert Images to PDF Execution (iLovePDF Logic with Rotation & Options)
+  createPdfBtn?.addEventListener('click', async () => {
+    if (selectedImagesList.length === 0) return;
+
+    createPdfBtn.style.display = 'none';
+    progBox.classList.remove('hidden');
+    doneBox.classList.add('hidden');
+
+    try {
+      const { jsPDF } = (window as any).jspdf;
+      const shouldMerge = mergeAllCheck.checked;
+      const total = selectedImagesList.length;
+
+      // Helper function to render an image item onto canvas respecting rotation
+      async function renderRotatedCanvas(item: ImageItem): Promise<HTMLCanvasElement> {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            const rot = item.rotation % 360;
+            const canvas = document.createElement('canvas');
+            if (rot === 90 || rot === 270) {
+              canvas.width = img.naturalHeight || img.height;
+              canvas.height = img.naturalWidth || img.width;
+            } else {
+              canvas.width = img.naturalWidth || img.width;
+              canvas.height = img.naturalHeight || img.height;
+            }
+            const ctx = canvas.getContext('2d')!;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate((rot * Math.PI) / 180);
+            ctx.drawImage(img, -(img.naturalWidth || img.width) / 2, -(img.naturalHeight || img.height) / 2);
+            ctx.restore();
+            resolve(canvas);
+          };
+          img.onerror = () => reject(new Error('Failed to decode image ' + item.file.name));
+          img.src = item.previewUrl;
+        });
+      }
+
+      if (shouldMerge) {
+        // Mode A: Merge all images into a single multi-page PDF
+        let doc: any = null;
+
+        for (let i = 0; i < total; i++) {
+          const item = selectedImagesList[i];
+          const pct = Math.round(((i + 1) / total) * 88);
+          setProgress(pct, 'Converting images to PDF…', `Processing page ${i + 1} of ${total}: ${item.file.name}`);
+
+          const canvas = await renderRotatedCanvas(item);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.94);
+
+          const imgW = canvas.width;
+          const imgH = canvas.height;
+          const imgAspect = imgW / imgH;
+
+          // Orientation calculation
+          let pageW = 210; // mm
+          let pageH = 297;
+          let pageOrient: 'p' | 'l' = currentImgOrientation === 'landscape' ? 'l' : 'p';
+
+          if (currentImgPageSize === 'fit') {
+            // Natural dimension fit (96 DPI)
+            pageW = Math.max((imgW / 96) * 25.4, 40);
+            pageH = Math.max((imgH / 96) * 25.4, 40);
+            pageOrient = imgW > imgH ? 'l' : 'p';
+          } else if (currentImgPageSize === 'letter') {
+            pageW = 215.9;
+            pageH = 279.4;
+            if (pageOrient === 'l') { const t = pageW; pageW = pageH; pageH = t; }
+          } else { // a4
+            pageW = 210;
+            pageH = 297;
+            if (pageOrient === 'l') { const t = pageW; pageW = pageH; pageH = t; }
+          }
+
+          // Margin calculation (iLovePDF none / small / big)
+          let marginMm = 0;
+          if (currentImgMargin === 'small') marginMm = 10;
+          if (currentImgMargin === 'big') marginMm = 20;
+
+          const printableW = Math.max(pageW - (marginMm * 2), 10);
+          const printableH = Math.max(pageH - (marginMm * 2), 10);
+
+          let drawW = printableW;
+          let drawH = printableH;
+          let drawX = marginMm;
+          let drawY = marginMm;
+
+          if (currentImgPageSize !== 'fit') {
+            if (imgAspect > (printableW / printableH)) {
+              drawW = printableW;
+              drawH = printableW / imgAspect;
+              drawX = marginMm;
+              drawY = marginMm + ((printableH - drawH) / 2);
+            } else {
+              drawH = printableH;
+              drawW = printableH * imgAspect;
+              drawX = marginMm + ((printableW - drawW) / 2);
+              drawY = marginMm;
+            }
+          }
+
+          if (i === 0) {
+            doc = new jsPDF({
+              orientation: pageOrient,
+              unit: 'mm',
+              format: currentImgPageSize === 'fit' ? [pageW, pageH] : (currentImgPageSize === 'letter' ? 'letter' : 'a4')
+            });
+            doc.addImage(dataUrl, 'JPEG', drawX, drawY, drawW, drawH, undefined, 'FAST');
+          } else {
+            doc.addPage(
+              currentImgPageSize === 'fit' ? [pageW, pageH] : (currentImgPageSize === 'letter' ? 'letter' : 'a4'),
+              pageOrient
+            );
+            doc.addImage(dataUrl, 'JPEG', drawX, drawY, drawW, drawH, undefined, 'FAST');
+          }
+        }
+
+        setProgress(96, 'Finalizing PDF…', 'Building single merged document');
+        const pdfBlob = doc.output('blob');
+        downloadedResultBlob = pdfBlob;
+        const firstBase = selectedImagesList[0]?.file.name.replace(/\.[^/.]+$/, '') || 'images';
+        downloadedFileName = `${firstBase}_merged.pdf`;
+
+        setProgress(100, 'Complete!', 'Document generated successfully');
+        await new Promise(r => setTimeout(r, 200));
+
+        progBox.classList.add('hidden');
+        doneBox.classList.remove('hidden');
+        doneBox.classList.add('flex');
+        doneTitle.textContent = 'The images have been converted to PDF!';
+        doneLbl.textContent = `${total} image${total > 1 ? 's' : ''} merged into 1 PDF · ${(pdfBlob.size / 1024).toFixed(0)} KB`;
+        dlBtnText.textContent = 'Download PDF';
+
+      } else {
+        // Mode B: Generate individual PDFs in a ZIP
+        const zip = new JSZip();
+
+        for (let i = 0; i < total; i++) {
+          const item = selectedImagesList[i];
+          const pct = Math.round(((i + 1) / total) * 88);
+          setProgress(pct, 'Converting individual PDFs…', `Converting ${i + 1} of ${total}: ${item.file.name}`);
+
+          const canvas = await renderRotatedCanvas(item);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.94);
+
+          const imgW = canvas.width;
+          const imgH = canvas.height;
+          let pageW = Math.max((imgW / 96) * 25.4, 40);
+          let pageH = Math.max((imgH / 96) * 25.4, 40);
+          let pageOrient: 'p' | 'l' = imgW > imgH ? 'l' : 'p';
+
+          const singleDoc = new jsPDF({
+            orientation: pageOrient,
+            unit: 'mm',
+            format: [pageW, pageH]
+          });
+          singleDoc.addImage(dataUrl, 'JPEG', 0, 0, pageW, pageH, undefined, 'FAST');
+          const singleBlob = singleDoc.output('blob');
+          const baseName = item.file.name.replace(/\.[^/.]+$/, '');
+          zip.file(`${baseName}.pdf`, singleBlob);
+        }
+
+        setProgress(95, 'Packaging ZIP…', 'Archiving individual PDF files');
+        const zipBlob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+        downloadedResultBlob = zipBlob;
+        downloadedFileName = 'converted_pdfs.zip';
+
+        setProgress(100, 'Complete!', 'Individual PDFs archived');
+        await new Promise(r => setTimeout(r, 200));
+
+        progBox.classList.add('hidden');
+        doneBox.classList.remove('hidden');
+        doneBox.classList.add('flex');
+        doneTitle.textContent = 'Individual PDFs ready!';
+        doneLbl.textContent = `${total} PDF files packaged in ZIP · ${(zipBlob.size / 1024).toFixed(0)} KB`;
+        dlBtnText.textContent = 'Download ZIP';
+      }
+
+    } catch (err) {
+      console.error(err);
+      progBox.classList.add('hidden');
+      createPdfBtn.style.display = 'flex';
+      alert('PDF conversion failed: ' + (err as Error).message);
+    }
+  });
+
+  /* ══════════════════════════════════════════════════════════
+     Shared Download & Reset Handlers
+  ══════════════════════════════════════════════════════════ */
+  dlBtn?.addEventListener('click', () => {
+    if (!downloadedResultBlob) return;
+    const url = URL.createObjectURL(downloadedResultBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = downloadedFileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  });
+
+  rstBtn?.addEventListener('click', () => {
+    downloadedResultBlob = null;
+    hideAllResults();
+
+    if (currentMode === 'pdf-to-img') {
+      selectedPdfFile = null;
+      cvtBtn.disabled = true;
+      cvtBtn.style.display = 'flex';
+      fi.value = '';
+      dzL.innerHTML = 'Drop your PDF here, or <span class="text-[#e60023] underline underline-offset-2">browse files</span>';
+      if (cvtBtnText) cvtBtnText.textContent = `Convert PDF to ${currentFormat.toUpperCase()}`;
+    } else {
+      selectedImagesList.forEach(item => URL.revokeObjectURL(item.previewUrl));
+      selectedImagesList = [];
+      imgInput.value = '';
+      imgAddMoreInput.value = '';
+      createPdfBtn.style.display = 'flex';
+      createPdfBtn.disabled = true;
+      renderImageStage();
+    }
+  });
+
+  /* ── Large File Card Actions ── */
+  document.getElementById('largeFileSignupBtn')?.addEventListener('click', () => {
+    if ((window as any).openAuthModal) {
+      (window as any).openAuthModal(true, {
+        title: 'Batch / File Over 100 MB Limit',
+        text: 'Create a free account in seconds to unlock conversions up to 1 GB!'
+      });
+    }
+  });
+
+  document.getElementById('largeFileLoginBtn')?.addEventListener('click', () => {
+    if ((window as any).openAuthModal) {
+      (window as any).openAuthModal(false, {
+        title: 'Batch / File Over 100 MB Limit',
+        text: 'Sign in to your account to unlock conversions up to 1 GB!'
+      });
+    }
+  });
+
+  function updateLimitUI() {
+    const dzLimitText = document.getElementById('dzLimitText');
+    const imgDzLimitText = document.getElementById('imgDzLimitText');
+    if (isUserLoggedIn()) {
+      if (dzLimitText) dzLimitText.innerHTML = '<span class="text-[#103c25] font-bold">✓ Signed in:</span> Up to 1 GB supported · PDF only';
+      if (imgDzLimitText) imgDzLimitText.innerHTML = '<span class="text-[#103c25] font-bold">✓ Signed in:</span> Up to 1 GB supported · Multiple images';
+      if (pendingLargeFile) {
+        largeFileAlert.classList.add('hidden');
+        if (Array.isArray(pendingLargeFile)) {
+          selectedImagesList = pendingLargeFile;
+          pendingLargeFile = null;
+          renderImageStage();
+        } else {
+          const fileToLoad = pendingLargeFile;
+          pendingLargeFile = null;
+          setPdfFile(fileToLoad);
+        }
+      }
+    } else {
+      if (dzLimitText) dzLimitText.textContent = 'Up to 100 MB for guests · Sign up for up to 1 GB';
+      if (imgDzLimitText) imgDzLimitText.textContent = 'Supports JPG, PNG, WebP, TIFF, BMP · Up to 100 MB for guests';
+    }
+  }
+
+  window.addEventListener('authChange', updateLimitUI);
+  updateLimitUI();
+</script>

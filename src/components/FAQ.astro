@@ -1,0 +1,73 @@
+---
+// Pinterest FAQ Section per DESIGN.md
+---
+
+<section id="faq" class="py-16 md:py-24 px-4 md:px-6 bg-[#ffffff] border-b border-[#dadad3]">
+  <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-12 items-start">
+
+    <!-- Left Editorial Column -->
+    <div>
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f6f3] text-xs font-bold text-[#62625b] mb-3 border border-[#dadad3]">
+        ❓ Help & Answers
+      </div>
+      <h2 class="text-[28px] sm:text-[34px] font-bold text-[#000000] tracking-[-1.2px] leading-tight mb-4">
+        Frequently asked questions
+      </h2>
+      <p class="text-sm text-[#62625b] leading-relaxed mb-6">
+        Everything you need to know about formats, privacy, and file limits. Need assistance?
+      </p>
+      <a
+        href="mailto:support@pdfspark.io"
+        class="inline-flex items-center gap-2 text-sm font-bold text-[#e60023] hover:underline underline-offset-4"
+      >
+        <span>Contact our support team</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Right Accordion List (hairline dividers per DESIGN.md lines 319 & 397) -->
+    <div class="border-t border-[#dadad3]">
+      {[
+        {
+          q: "Is PDFSpark completely free to use?",
+          a: "Yes! PDFSpark is 100% free with no watermarks, no hidden charges, and no mandatory sign-up for files up to 100 MB. You can convert unlimited documents anytime."
+        },
+        {
+          q: "What is the maximum file size limit?",
+          a: "Anonymous guest uploads support files up to 100 MB. If you need to convert larger files (up to 1 GB), simply create a free account or log in with Google or GitHub."
+        },
+        {
+          q: "Are my documents secure and private?",
+          a: "Absolutely. Standard conversions are processed locally inside your web browser using WebAssembly. Your files are never uploaded to remote servers or stored in third-party databases."
+        },
+        {
+          q: "Which format should I select for my PDF?",
+          a: "Choose JPG for photos and web articles (smallest file size), PNG for documents with crisp text or transparency, WebP for high-speed modern websites, and TIFF for prepress and high-DPI archival printing."
+        },
+        {
+          q: "How does the ZIP download work?",
+          a: "When you click 'Convert PDF', our renderer converts each page into an individual image file. Once finished, all pages are packaged into a single ZIP archive named after your document."
+        },
+        {
+          q: "Does PDFSpark work on mobile devices and tablets?",
+          a: "Yes. PDFSpark is fully responsive and optimized for touch targets across iOS (iPhone, iPad) and Android without downloading any app."
+        }
+      ].map((faq, idx) => (
+        <details class="group border-b border-[#dadad3] py-5 cursor-pointer" open={idx === 0}>
+          <summary class="flex items-center justify-between font-bold text-[16px] text-[#000000] list-none select-none">
+            <span class="pr-4">{faq.q}</span>
+            <div class="w-7 h-7 rounded-full bg-[#f6f6f3] group-open:bg-[#e5e5e0] flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-3.5 h-3.5 text-[#000000] transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M19 9l-7 7-7-7"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="mt-3 text-sm text-[#62625b] leading-relaxed pr-8">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+    </div>
+
+  </div>
+</section>

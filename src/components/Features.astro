@@ -1,0 +1,92 @@
+---
+// Pinterest Feature Cards - Alternating editorial layout per DESIGN.md
+---
+
+<section id="features" class="py-16 md:py-24 px-4 md:px-6 bg-[#fbfbf9] border-b border-[#dadad3]">
+  <div class="max-w-[1280px] mx-auto">
+
+    <!-- Section Header -->
+    <div class="text-center max-w-[620px] mx-auto mb-16">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f6f3] text-xs font-bold text-[#62625b] mb-3 border border-[#dadad3]">
+        ⚡ Performance Engine
+      </div>
+      <h2 class="text-[28px] sm:text-[38px] font-bold text-[#000000] tracking-[-1.2px] leading-tight mb-3">
+        Built for creators, designers, and teams
+      </h2>
+      <p class="text-base text-[#62625b] leading-relaxed">
+        Everything you need to turn static PDFs into rich, high-resolution imagery with zero compromises.
+      </p>
+    </div>
+
+    <!-- 6 Editorial Feature Cards (Grid with 16px radius, surface-card & canvas backgrounds) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {[
+        {
+          tag: "Blazing Speed",
+          title: "Instant In-Browser Render",
+          desc: "Powered by WebAssembly and pdf.js. A 50-page document converts in under 5 seconds directly on your device.",
+          icon: "⚡",
+          bg: "bg-[#ffffff]",
+        },
+        {
+          tag: "Complete Privacy",
+          title: "Client-Side Processing",
+          desc: "Your files never leave your computer for standard conversions. Zero server uploads, zero surveillance.",
+          icon: "🔒",
+          bg: "bg-[#f6f6f3]",
+        },
+        {
+          tag: "Visual Clarity",
+          title: "Up to 300 DPI Sharpness",
+          desc: "Extract ultra-high resolution pins suitable for large-format print, architectural review, and retina screens.",
+          icon: "🖼️",
+          bg: "bg-[#ffffff]",
+        },
+        {
+          tag: "File Control",
+          title: "5 Native Formats",
+          desc: "JPG for photos, PNG for transparency, WebP for web speed, TIFF for print prep, and BMP for raw compatibility.",
+          icon: "🎨",
+          bg: "bg-[#f6f6f3]",
+        },
+        {
+          tag: "Capacity",
+          title: "1 GB Extended Uploads",
+          desc: "Free anonymous uploads up to 100 MB. Sign up in seconds with Google or GitHub to unlock files up to 1 GB.",
+          icon: "📦",
+          bg: "bg-[#ffffff]",
+        },
+        {
+          tag: "Universal",
+          title: "One-Click ZIP Packaging",
+          desc: "Every single page is neatly numbered and bundled into a clean ZIP archive ready to download and share.",
+          icon: "⬇️",
+          bg: "bg-[#f6f6f3]",
+        },
+      ].map((card) => (
+        <div class={`${card.bg} border border-[#dadad3] rounded-[16px] p-8 flex flex-col justify-between hover:border-[#000000] transition-colors`}>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="w-10 h-10 rounded-full bg-[#ffffff] border border-[#dadad3] flex items-center justify-center text-xl shadow-xs">
+                {card.icon}
+              </span>
+              <span class="text-[11px] font-bold text-[#62625b] uppercase tracking-wider bg-[#e5e5e0] px-2.5 py-0.5 rounded-full">
+                {card.tag}
+              </span>
+            </div>
+            <h3 class="text-[20px] font-bold text-[#000000] tracking-[-0.5px] mb-2 leading-snug">
+              {card.title}
+            </h3>
+            <p class="text-sm text-[#62625b] leading-relaxed">
+              {card.desc}
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#e5e5e0] flex items-center text-xs font-bold text-[#e60023]">
+            <span>Included in free tool →</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

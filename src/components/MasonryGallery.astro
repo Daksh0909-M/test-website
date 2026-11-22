@@ -1,0 +1,177 @@
+---
+// Pinterest Masonry Pin Grid - Load-bearing visual element per DESIGN.md
+---
+
+<section id="masonry" class="py-16 px-4 md:px-6 bg-[#ffffff]">
+  <div class="max-w-[1440px] mx-auto">
+
+    <!-- Section Heading per DESIGN.md: heading-xl (28px -1.2px) -->
+    <div class="text-center max-w-[640px] mx-auto mb-10">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f6f3] text-xs font-bold text-[#62625b] mb-3 border border-[#dadad3]">
+        <span>📌</span> Masonry Pin Showcase
+      </div>
+      <h2 class="text-[28px] sm:text-[34px] font-bold text-[#000000] tracking-[-1.2px] leading-tight mb-3">
+        See your converted documents come to life
+      </h2>
+      <p class="text-base text-[#62625b] leading-normal">
+        Every PDF page transforms into a crisp visual pin. From lookbooks and presentations to blueprints and recipes.
+      </p>
+    </div>
+
+    <!-- Filter chips strip per DESIGN.md -->
+    <div class="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8">
+      {["All Formats", "JPG Pins", "PNG Transparent", "WebP High-Speed", "TIFF Archival", "BMP Raw"].map((chip, i) => (
+        <button
+          class={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-colors cursor-pointer border ${
+            i === 0
+              ? "bg-[#000000] text-white border-[#000000]"
+              : "bg-[#f6f6f3] text-[#000000] border-transparent hover:bg-[#e5e5e0]"
+          }`}
+        >
+          {chip}
+        </button>
+      ))}
+    </div>
+
+    <!-- Masonry Columns Grid (tight 8px gutters per DESIGN.md lines 380 & 385) -->
+    <div class="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-2 [column-fill:_balance]">
+      {[
+        {
+          title: "Minimalist Lookbook.pdf",
+          format: "PNG · 300 DPI",
+          aspect: "h-[340px]",
+          bg: "from-[#f4ede4] to-[#e8ded1]",
+          icon: "👗",
+          color: "#9a7b56",
+          desc: "Clean apparel catalog with full alpha transparency",
+          pages: "12 pages"
+        },
+        {
+          title: "Modern Architectural Plan.pdf",
+          format: "TIFF · Archival",
+          aspect: "h-[260px]",
+          bg: "from-[#e3e8ee] to-[#c7d2de]",
+          icon: "📐",
+          color: "#475569",
+          desc: "Vector precision floor plans extracted without loss",
+          pages: "4 pages"
+        },
+        {
+          title: "Artisanal Bakery Recipes.pdf",
+          format: "JPG · 95% Quality",
+          aspect: "h-[380px]",
+          bg: "from-[#fce7db] to-[#f7cbaf]",
+          icon: "🥐",
+          color: "#c2410c",
+          desc: "Full-color culinary cookbook converted to web-ready JPEG pins",
+          pages: "28 pages"
+        },
+        {
+          title: "Quarterly Board Deck.pdf",
+          format: "WebP · Speed Optimized",
+          aspect: "h-[240px]",
+          bg: "from-[#ede9fe] to-[#ddd6fe]",
+          icon: "📊",
+          color: "#7c3aed",
+          desc: "High-density slides ready for web embed",
+          pages: "16 slides"
+        },
+        {
+          title: "Botanical Garden Guide.pdf",
+          format: "PNG · Lossless",
+          aspect: "h-[320px]",
+          bg: "from-[#dcfce7] to-[#bbf7d0]",
+          icon: "🌿",
+          color: "#15803d",
+          desc: "Vibrant flora illustrations and macro details",
+          pages: "8 pages"
+        },
+        {
+          title: "Urban Photography Zine.pdf",
+          format: "JPG · 200 DPI",
+          aspect: "h-[300px]",
+          bg: "from-[#f1f5f9] to-[#cbd5e1]",
+          icon: "📷",
+          color: "#334155",
+          desc: "Street photography collection rendered with rich contrast",
+          pages: "20 pages"
+        },
+        {
+          title: "Industrial Hardware Specs.pdf",
+          format: "BMP · 24-bit Raw",
+          aspect: "h-[230px]",
+          bg: "from-[#ffedd5] to-[#fed7aa]",
+          icon: "⚙️",
+          color: "#ea580c",
+          desc: "Raw pixel bitmap extracted for legacy engineering tools",
+          pages: "6 pages"
+        },
+        {
+          title: "Typography Specimen.pdf",
+          format: "PNG · High Contrast",
+          aspect: "h-[350px]",
+          bg: "from-[#fae8ff] to-[#f5d0fe]",
+          icon: "🔤",
+          color: "#a21caf",
+          desc: "Pin Sans and geometric typeface specimens",
+          pages: "10 pages"
+        },
+        {
+          title: "Weekly Meal Planner.pdf",
+          format: "WebP · 90%",
+          aspect: "h-[270px]",
+          bg: "from-[#fef9c3] to-[#fef08a]",
+          icon: "🥗",
+          color: "#854d0e",
+          desc: "Printable planner templates ready to pin and share",
+          pages: "7 pages"
+        },
+        {
+          title: "Ceramic Design Portfolio.pdf",
+          format: "TIFF · 300 DPI",
+          aspect: "h-[310px]",
+          bg: "from-[#e0e7ff] to-[#c7d2fe]",
+          icon: "🏺",
+          color: "#4338ca",
+          desc: "Studio pottery exhibition catalog",
+          pages: "14 pages"
+        }
+      ].map((pin) => (
+        <div class="break-inside-avoid mb-2 group cursor-pointer">
+          <!-- Pin Card: 16px radius, full bleed imagery, no internal padding -->
+          <div class={`relative ${pin.aspect} rounded-[16px] bg-gradient-to-b ${pin.bg} overflow-hidden border border-[#dadad3] transition-transform duration-200 group-hover:scale-[1.01]`}>
+
+            <!-- Floating Overlay Pill in corner (Pinterest signature) -->
+            <div class="absolute top-3 left-3 z-10">
+              <span class="pin-overlay-pill bg-white text-[#000000] text-[11px] font-bold px-3 py-1 rounded-full shadow-sm">
+                {pin.format}
+              </span>
+            </div>
+
+            <!-- Red Quick Pin Action on Hover -->
+            <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+              <a href="#converter" class="h-8 px-3 rounded-full bg-[#e60023] hover:bg-[#cc001f] text-white text-xs font-bold inline-flex items-center gap-1 shadow-md">
+                Convert
+              </a>
+            </div>
+
+            <!-- Pin Content Visual Mockup -->
+            <div class="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+              <span class="text-4xl mb-2 drop-shadow-sm">{pin.icon}</span>
+              <p class="font-bold text-sm text-[#000000] tracking-tight">{pin.title}</p>
+              <p class="text-[11px] text-[#62625b] mt-1 line-clamp-2 max-w-[200px]">{pin.desc}</p>
+            </div>
+
+            <!-- Bottom Metadata bar -->
+            <div class="absolute bottom-3 inset-x-3 flex items-center justify-between text-[11px] text-[#262622] font-semibold bg-white/70 backdrop-blur-sm px-2.5 py-1 rounded-full">
+              <span>{pin.pages}</span>
+              <span class="text-[#e60023] font-bold">PDFSpark ✓</span>
+            </div>
+
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

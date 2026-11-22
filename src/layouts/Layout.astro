@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
@@ -9,48 +9,70 @@ const {
   description = "A photography-first PDF converter. Transform PDF pages into high-res JPG, PNG, WebP, TIFF and BMP with Pinterest-crafted elegance.",
 } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
+    <meta
+      name="google-site-verification"
+      content="uxgkkTwdJLsxQgtlxFHpRV9K8wsBYjq2Cmp768ts-7E"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <!-- Pinterest Red ⚡ Icon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%23e60023'/><text x='16' y='22' font-size='17' font-weight='bold' text-anchor='middle' fill='white'>⚡</text></svg>" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%23e60023'/><text x='16' y='22' font-size='17' font-weight='bold' text-anchor='middle' fill='white'>⚡</text></svg>"
+    />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script is:inline src="https://cdn.tailwindcss.com"></script>
     <script is:inline>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              pinRed: '#e60023',
-              pinRedPressed: '#cc001f',
-              pinCream: '#fbfbf9',
-              pinCard: '#f6f6f3',
-              pinCharcoal: '#262622',
-              pinHairline: '#dadad3',
-              pinHairlineSoft: '#e5e5e0',
-              pinAsh: '#91918c',
-              pinMute: '#62625b',
-              pinFocus: '#435ee5',
+              pinRed: "#e60023",
+              pinRedPressed: "#cc001f",
+              pinCream: "#fbfbf9",
+              pinCard: "#f6f6f3",
+              pinCharcoal: "#262622",
+              pinHairline: "#dadad3",
+              pinHairlineSoft: "#e5e5e0",
+              pinAsh: "#91918c",
+              pinMute: "#62625b",
+              pinFocus: "#435ee5",
             },
             borderRadius: {
-              'md': '16px',
-              'lg': '32px',
-            }
-          }
-        }
-      }
+              md: "16px",
+              lg: "32px",
+            },
+          },
+        },
+      };
     </script>
     <style>
-      * { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
       body {
-        font-family: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-family:
+          "Inter",
+          -apple-system,
+          system-ui,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
         background-color: #fbfbf9;
         color: #33332e;
         -webkit-font-smoothing: antialiased;
